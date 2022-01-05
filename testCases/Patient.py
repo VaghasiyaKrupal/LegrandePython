@@ -9,7 +9,7 @@ from Locators.Locators import Locators
 import random
 from faker import Faker
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandPython/TestData/Data.xlsx"
+FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath, data_only=True)
 datasheet = datafile.get_sheet_by_name('Test Data')
 loginsheet = datafile.get_sheet_by_name('Login Credentials')
@@ -57,7 +57,7 @@ class TestPatient:
         self.driver.find_element_by_xpath(Locators.continueButton).click()
         self.driver.find_element_by_id('new_password').send_keys(loginsheet.cell(2, 4).value)
         self.driver.find_element_by_id('confirm_password').send_keys(loginsheet.cell(2, 4).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(3)
         if "Thank you!" and "Your email address has been verified, and your registration is complete." in self.driver.page_source:
             print('\nYour patient account has been verified')

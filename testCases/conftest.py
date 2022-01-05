@@ -17,10 +17,11 @@ LastName = faker.last_name()
 PhoneNumber = faker.phone_number()
 EmailAddress = FirstName + "." + LastName + "@mailinator.com"
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandPython/TestData/Data.xlsx"
+FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
-datasheet = datafile.get_sheet_by_name('Test Data')
-loginSheet = datafile.get_sheet_by_name("Login Credentials")
+datasheet = datafile['Test Data']
+loginSheet = datafile["Login Credentials"]
+print(loginSheet.max_row)
 
 
 @pytest.fixture()
@@ -31,7 +32,7 @@ def setup():
 
 
 @pytest.fixture()
-def PracticeLogin(setup):
+def MasterLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(2, 2).value)
     driver.implicitly_wait(5)
@@ -43,18 +44,7 @@ def PracticeLogin(setup):
 
 
 @pytest.fixture()
-def PracticeForgotPassword(setup):
-    driver = setup
-    driver.get(loginSheet.cell(2, 2).value)
-    driver.implicitly_wait(5)
-    login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(2, 3).value)
-    time.sleep(1)
-    login.SubmitButton()
-
-
-@pytest.fixture()
-def HubLogin(setup):
+def PracticeLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(3, 2).value)
     driver.implicitly_wait(5)
@@ -66,7 +56,7 @@ def HubLogin(setup):
 
 
 @pytest.fixture()
-def HubForgotPassword(setup):
+def PracticeForgotPassword(setup):
     driver = setup
     driver.get(loginSheet.cell(3, 2).value)
     driver.implicitly_wait(5)
@@ -77,7 +67,7 @@ def HubForgotPassword(setup):
 
 
 @pytest.fixture()
-def RXPharmaLogin(setup):
+def HubLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(4, 2).value)
     driver.implicitly_wait(5)
@@ -89,7 +79,7 @@ def RXPharmaLogin(setup):
 
 
 @pytest.fixture()
-def RXPharmaForgotPassword(setup):
+def HubForgotPassword(setup):
     driver = setup
     driver.get(loginSheet.cell(4, 2).value)
     driver.implicitly_wait(5)
@@ -100,7 +90,7 @@ def RXPharmaForgotPassword(setup):
 
 
 @pytest.fixture()
-def OTCPharmaLogin(setup):
+def RXPharmaLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(5, 2).value)
     driver.implicitly_wait(5)
@@ -112,7 +102,7 @@ def OTCPharmaLogin(setup):
 
 
 @pytest.fixture()
-def OTCPharmaForgotPassword(setup):
+def RXPharmaForgotPassword(setup):
     driver = setup
     driver.get(loginSheet.cell(5, 2).value)
     driver.implicitly_wait(5)
@@ -123,7 +113,7 @@ def OTCPharmaForgotPassword(setup):
 
 
 @pytest.fixture()
-def CompoundPharmaLogin(setup):
+def OTCPharmaLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(6, 2).value)
     driver.implicitly_wait(5)
@@ -135,7 +125,7 @@ def CompoundPharmaLogin(setup):
 
 
 @pytest.fixture()
-def CompoundPharmaForgotPassword(setup):
+def OTCPharmaForgotPassword(setup):
     driver = setup
     driver.get(loginSheet.cell(6, 2).value)
     driver.implicitly_wait(5)
@@ -146,13 +136,36 @@ def CompoundPharmaForgotPassword(setup):
 
 
 @pytest.fixture()
-def PatientLogin(setup):
+def CompoundPharmaLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(7, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(datasheet.cell(2, 3).value)
+    login.SetUsername(loginSheet.cell(7, 3).value)
     login.SetPassword(loginSheet.cell(7, 4).value)
+    login.SignIn()
+    driver.implicitly_wait(10)
+
+
+@pytest.fixture()
+def CompoundPharmaForgotPassword(setup):
+    driver = setup
+    driver.get(loginSheet.cell(7, 2).value)
+    driver.implicitly_wait(5)
+    login = LoginScreen(driver)
+    login.ForgotPassword(loginSheet.cell(7, 3).value)
+    time.sleep(1)
+    login.SubmitButton()
+
+
+@pytest.fixture()
+def PatientLogin(setup):
+    driver = setup
+    driver.get(loginSheet.cell(8, 2).value)
+    driver.implicitly_wait(5)
+    login = LoginScreen(driver)
+    login.SetUsername(datasheet.cell(2, 3).value)
+    login.SetPassword(loginSheet.cell(8, 4).value)
     login.SignIn()
     time.sleep(3)
 
@@ -160,12 +173,24 @@ def PatientLogin(setup):
 @pytest.fixture()
 def PatientForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(7, 2).value)
+    driver.get(loginSheet.cell(8, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
     login.PatientForgotPassword(datasheet.cell(2, 3).value)
     time.sleep(1)
     login.SendResetEmail()
+
+
+@pytest.fixture()
+def UserLogin(setup):
+    driver = setup
+    driver.get(loginSheet.cell(9, 2).value)
+    driver.implicitly_wait(5)
+    login = LoginScreen(driver)
+    login.SetUsername(loginSheet.cell(9, 3).value)
+    login.SetPassword(loginSheet.cell(9, 4).value)
+    login.SignIn()
+    driver.implicitly_wait(10)
 
 
 @pytest.fixture()

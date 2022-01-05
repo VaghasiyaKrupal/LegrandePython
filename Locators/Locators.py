@@ -1,6 +1,10 @@
+from datetime import date
 from openpyxl import load_workbook
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandPython/TestData/Data.xlsx"
+today = date.today()
+currentDate = today.strftime("%m/%d/%Y")
+
+FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 datasheet = datafile.get_sheet_by_name('Test Data')
 
@@ -39,8 +43,8 @@ class Locators:
     tableRow = '//tbody/tr'
     doctor_search_textbox = '//*[@placeholder="Search by Name"]'
     NextButton = '//button[@type="button" and text()="Next"]'
-    CreateOnetimeRXButton = "//*[text()='Create New Rx']"
-    createSubscriptionRxButton = "//*[text()='Create Custom Plan']"
+    CreateOnetimeRXButton = '//*[@data-test="ORDER_FLOW_CREATE_NEW_RX"]'
+    createSubscriptionRxButton = '//*[@data-test="ORDER_FLOW_CREATE_CUSTOM_PLAN"]'
     OnetimeSearchMedicine = "New One-time Rx"
     searchForMedication = '//*[@placeholder="Search for a Medication"]'
     AddButton = "//*[@class='is-flex row']//*[text()='Add']"
@@ -60,7 +64,7 @@ class Locators:
     providePayment = '//*[text()="Provide Payment"]'
     surgeryDate = '//*[@placeholder="MM/DD/YYYY"]'
     pharmacyNotes = '//*[@placeholder="Enter notes for the pharmacist. (optional) "]'
-    submitButton = '//*[text()="Submit"]'
+    submit_CreateOrderButton = '//*[@data-test="ORDER_FLOW_SUBMIT"]'
     selectOnetimeTemplate = "(//*[@type='button' and text()='Select'])[1]"
     selectSubscriptionTemplate = "(//*[@type='button' and text()='Select'])[2]"
     templateTitle = '//*[@placeholder="Template Title"]'
@@ -148,4 +152,6 @@ class Locators:
     reasoneDropdownID = 'selected_remarks'
     selectOtherReason = '//*[text()="Other"]'
     userReasonID = 'user_remarks'
+    myQueueOrderDate = "(//*[@class='table-row']//td[2][contains(text(),'"+currentDate+"')])[1]"
+    myQueuePatientName = "(//*[@class='table-row']//td[3][contains(text(),'"+datasheet.cell(2, 1).value+"')])[1]"
 

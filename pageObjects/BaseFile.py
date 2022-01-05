@@ -4,7 +4,7 @@ from faker import Faker
 from openpyxl import load_workbook
 from Locators.Locators import Locators
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandPython/TestData/Data.xlsx"
+FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 datasheet = datafile.get_sheet_by_name('Test Data')
 loginSheet = datafile.get_sheet_by_name("Login Credentials")
@@ -133,7 +133,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(Locators.skipPayment).click()
         self.driver.find_element_by_xpath(Locators.surgeryDate).send_keys(currentDate)
         self.driver.find_element_by_xpath(Locators.pharmacyNotes).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def OnetimeOTCSkipPayment(self):
@@ -178,7 +178,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(Locators.skipPayment).click()
         self.driver.find_element_by_xpath(Locators.surgeryDate).send_keys(currentDate)
         self.driver.find_element_by_xpath(Locators.pharmacyNotes).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def OnetimeCompoundSkipPayment(self):
@@ -223,7 +223,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(Locators.skipPayment).click()
         self.driver.find_element_by_xpath(Locators.surgeryDate).send_keys(currentDate)
         self.driver.find_element_by_xpath(Locators.pharmacyNotes).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def SubscriptionRXSkipPayment(self):
@@ -269,7 +269,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(Locators.skipPayment).click()
         self.driver.find_element_by_xpath(Locators.surgeryDate).send_keys(currentDate)
         self.driver.find_element_by_xpath(Locators.pharmacyNotes).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def SubscriptionOTCSkipPayment(self):
@@ -315,7 +315,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(Locators.skipPayment).click()
         self.driver.find_element_by_xpath(Locators.surgeryDate).send_keys(currentDate)
         self.driver.find_element_by_xpath(Locators.pharmacyNotes).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def SubscriptionCompoundSkipPayment(self):
@@ -361,7 +361,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(Locators.skipPayment).click()
         self.driver.find_element_by_xpath(Locators.surgeryDate).send_keys(currentDate)
         self.driver.find_element_by_xpath(Locators.pharmacyNotes).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def OnetimeRXProvidePayment(self):
@@ -441,7 +441,7 @@ class CommanFlow:
         notes = self.driver.find_element_by_xpath(Locators.pharmacyNotes)
         notes.clear()
         notes.send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def OnetimeOTCProvidePayment(self):
@@ -520,7 +520,7 @@ class CommanFlow:
         notes = self.driver.find_element_by_xpath(Locators.pharmacyNotes)
         notes.clear()
         notes.send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def OnetimeCompoundProvidePayment(self):
@@ -599,7 +599,7 @@ class CommanFlow:
         notes = self.driver.find_element_by_xpath(Locators.pharmacyNotes)
         notes.clear()
         notes.send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def SubscriptionRXProvidePayment(self):
@@ -680,7 +680,7 @@ class CommanFlow:
         notes = self.driver.find_element_by_xpath(Locators.pharmacyNotes)
         notes.clear()
         notes.send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def SubscriptionOTCProvidePayment(self):
@@ -761,7 +761,7 @@ class CommanFlow:
         notes = self.driver.find_element_by_xpath(Locators.pharmacyNotes)
         notes.clear()
         notes.send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def SubscriptionCompoundProvidePayment(self):
@@ -842,7 +842,7 @@ class CommanFlow:
         notes = self.driver.find_element_by_xpath(Locators.pharmacyNotes)
         notes.clear()
         notes.send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(7)
 
     def EditOrder(self):

@@ -2,7 +2,7 @@ import time
 from openpyxl import load_workbook
 from Locators.Locators import Locators
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandPython/TestData/Data.xlsx"
+FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 datasheet = datafile.get_sheet_by_name('Test Data')
 
@@ -104,6 +104,12 @@ class TestPractice:
         else:
             print("\nOrder: Onetime RX with skip payment, is not created")
         self.driver.close()
+
+    def test_VerifyOrderDetailsScreen(self, setup,PracticeLogin):
+        self.driver = setup
+        self.driver.find_element_by_link_text('Orders').click()
+        self.driver.find_element_by_xpath('//table/tbody/tr[1]/td[2]/a').click()
+        assert 'Prescription & Order Details'
 
     def test_CreatingOTCOnetimeSkipPayment(self, setup, PracticeLogin, OnetimeOTCSkipPayment):
         self.driver = setup
@@ -212,3 +218,13 @@ class TestPractice:
         else:
             print("\nOrder: Subscription Compound with provide payment, is not created")
         self.driver.close()
+
+    def test_CreateOrderFromUserAccount(self, setup, UserLogin, OnetimeRXSkipPayment):
+        self.driver = setup
+
+    def test_CheckUserOrder(self, setup, PracticeLogin):
+        self.driver = setup
+        time.sleep(3)
+        assert self.driver.find_element_by_xpath(Locators.myQueueOrderDate) in self.driver.page_source
+        assert self.driver.find_element_by_xpath(Locators.myQueuePatientName) in self.driver.page_source
+        # Pending bacause select indian timezone at the time of account creation and append created user name for Created By column

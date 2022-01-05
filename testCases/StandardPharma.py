@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandPython/TestData/Data.xlsx"
+FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 loginSheet = datafile.get_sheet_by_name("Login Credentials")
 
