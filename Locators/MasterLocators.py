@@ -58,15 +58,15 @@ class MasterLocators:
     addPracticeLink = "Add New Practice"
     dropdownSelectType = '//div[text()="Select..."]'
     practiceValue = '(//*[text()="Practice"])[4]'
-    RXDispenser = "//div[@aria-label='"+scriptData.cell(2, 6).value+"']"
-    OTCDispenser = "//div[@aria-label='" + scriptData.cell(2, 8).value + "']"
-    CompoundDispenser = "//div[@aria-label='" + scriptData.cell(2, 10).value + "']"
+    RXDispenser = "//div[@aria-label='"+scriptData.cell(2, 5).value+"']"
+    OTCDispenser = "//div[@aria-label='" + scriptData.cell(2, 6).value + "']"
+    CompoundDispenser = "//div[@aria-label='" + scriptData.cell(2, 7).value + "']"
 
     # User Creation
     userScreen = 'Users'
     practiceRadio = '//label[contains(text(),"Practice")]'
     searchPractice = '//*[@placeholder="Search for an account"]'
-    selectUserPractice = "(//*[text()='"+scriptData.cell(2, 12).value+"'])[1]"
+    selectUserPractice = "(//*[text()='"+scriptData.cell(2, 8).value+"'])[1]"
     userType = "//*[text()='Clerk']"
 
     # Payor Creation
@@ -77,3 +77,11 @@ class MasterLocators:
     Coupon = "//*[text()='Coupon']"
     payorStatus = "//*[text()='Active']"
     createPayorButton = "//*[text()='Create Payor']"
+
+    # Mailinator Locators
+    emailInbox = '//td[contains(text(),"Confirm Legrande Registration")]'
+    accountSetupLink = "//a[contains(text(),'Account Setup')]"
+    newPassword = 'password'
+    confirmPassword = 'password_confirmation'
+    setPasswordButton = "//button[contains(text(),'Set Password')]"
+    closeButton = "close"

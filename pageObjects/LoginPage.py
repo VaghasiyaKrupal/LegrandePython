@@ -33,7 +33,7 @@ class LoginScreen:
         self.driver.find_element_by_xpath(Locators.PatientForgotPasswordButton).click()
 
     def SubmitButton(self):
-        self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
+        self.driver.find_element_by_xpath(Locators.submitButton).click()
 
     def ClearAndEnterText(self):
         self.driver.find_element_by_xpath()

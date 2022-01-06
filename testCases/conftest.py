@@ -4,9 +4,11 @@ from faker import Faker
 from openpyxl import load_workbook
 from selenium import webdriver
 import pytest
+from selenium.webdriver.common.by import By
 from pageObjects.LoginPage import LoginScreen
 from pageObjects.BaseFile import CommanFlow
 from webdriver_manager.chrome import ChromeDriverManager
+from Locators.Locators import Locators
 
 
 faker = Faker()
@@ -21,7 +23,7 @@ FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.x
 datafile = load_workbook(FilePath)
 datasheet = datafile['Test Data']
 loginSheet = datafile["Login Credentials"]
-print(loginSheet.max_row)
+scriptData = datafile['Script Data']
 
 
 @pytest.fixture()
@@ -44,6 +46,17 @@ def MasterLogin(setup):
 
 
 @pytest.fixture()
+def MasterForgotPassword(setup):
+    driver = setup
+    driver.get(loginSheet.cell(2, 2).value)
+    driver.implicitly_wait(5)
+    login = LoginScreen(driver)
+    login.ForgotPassword(loginSheet.cell(2, 3).value)
+    time.sleep(1)
+    login.SubmitButton()
+
+
+@pytest.fixture()
 def PracticeLogin(setup):
     driver = setup
     driver.get(loginSheet.cell(3, 2).value)
@@ -52,7 +65,10 @@ def PracticeLogin(setup):
     login.SetUsername(loginSheet.cell(3, 3).value)
     login.SetPassword(loginSheet.cell(3, 4).value)
     login.SignIn()
-    driver.implicitly_wait(10)
+    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    if checkboxes:
+        checkboxes[0].click()
+        driver.find_element(By.XPATH, Locators.continueButton).click()
 
 
 @pytest.fixture()
@@ -75,7 +91,10 @@ def HubLogin(setup):
     login.SetUsername(loginSheet.cell(4, 3).value)
     login.SetPassword(loginSheet.cell(4, 4).value)
     login.SignIn()
-    driver.implicitly_wait(10)
+    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    if checkboxes:
+        checkboxes[0].click()
+        driver.find_element(By.XPATH, Locators.continueButton).click()
 
 
 @pytest.fixture()
@@ -98,7 +117,10 @@ def RXPharmaLogin(setup):
     login.SetUsername(loginSheet.cell(5, 3).value)
     login.SetPassword(loginSheet.cell(5, 4).value)
     login.SignIn()
-    driver.implicitly_wait(10)
+    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    if checkboxes:
+        checkboxes[0].click()
+        driver.find_element(By.XPATH, Locators.continueButton).click()
 
 
 @pytest.fixture()
@@ -121,7 +143,10 @@ def OTCPharmaLogin(setup):
     login.SetUsername(loginSheet.cell(6, 3).value)
     login.SetPassword(loginSheet.cell(6, 4).value)
     login.SignIn()
-    driver.implicitly_wait(10)
+    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    if checkboxes:
+        checkboxes[0].click()
+        driver.find_element(By.XPATH, Locators.continueButton).click()
 
 
 @pytest.fixture()
@@ -144,7 +169,10 @@ def CompoundPharmaLogin(setup):
     login.SetUsername(loginSheet.cell(7, 3).value)
     login.SetPassword(loginSheet.cell(7, 4).value)
     login.SignIn()
-    driver.implicitly_wait(10)
+    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    if checkboxes:
+        checkboxes[0].click()
+        driver.find_element(By.XPATH, Locators.continueButton).click()
 
 
 @pytest.fixture()
@@ -190,7 +218,10 @@ def UserLogin(setup):
     login.SetUsername(loginSheet.cell(9, 3).value)
     login.SetPassword(loginSheet.cell(9, 4).value)
     login.SignIn()
-    driver.implicitly_wait(10)
+    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    if checkboxes:
+        checkboxes[0].click()
+        driver.find_element(By.XPATH, Locators.continueButton).click()
 
 
 @pytest.fixture()

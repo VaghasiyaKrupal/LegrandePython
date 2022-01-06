@@ -10,9 +10,9 @@ import random
 from faker import Faker
 
 FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
-datafile = load_workbook(FilePath, data_only=True)
+datafile = load_workbook(FilePath)
 datasheet = datafile.get_sheet_by_name('Test Data')
-loginsheet = datafile.get_sheet_by_name('Login Credentials')
+loginSheet = datafile.get_sheet_by_name('Login Credentials')
 
 number = random.randint(0, 99999)
 faker = Faker()
@@ -43,20 +43,19 @@ class TestPatient:
 
     def test_CreateMailGetRegistrationLink(self, setup):
         self.driver = setup
-        self.driver.get('https://www.mailinator.com/')
+        self.driver.get(Locators.malinatorLink)
         self.driver.implicitly_wait(10)
-        self.driver.find_element_by_class_name('inbox-link').click()
-        self.driver.find_element_by_id('inbox_field').send_keys(datasheet.cell(2, 3).value)
-        self.driver.find_element_by_class_name('primary-btn').click()
+        self.driver.find_element_by_id(Locators.searchBoxID).send_keys(datasheet.cell(2, 3).value)
+        self.driver.find_element_by_xpath(Locators.goButtonLink).click()
         self.driver.implicitly_wait(10)
-        self.driver.find_element_by_xpath("//td[contains(text(),'Welcome to Legrande Health!')]").click()
+        self.driver.find_element_by_xpath(Locators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, '//iframe[@id="html_msg_body"]')))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//a[@class='complete-link']"))).click()
+        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, Locators.completeAccount))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.find_element_by_xpath(Locators.continueButton).click()
-        self.driver.find_element_by_id('new_password').send_keys(loginsheet.cell(2, 4).value)
-        self.driver.find_element_by_id('confirm_password').send_keys(loginsheet.cell(2, 4).value)
+        self.driver.find_element_by_id(Locators.newPasswordID).send_keys(loginSheet.cell(2, 4).value)
+        self.driver.find_element_by_id(Locators.confirmPasswordID).send_keys(loginSheet.cell(2, 4).value)
         self.driver.find_element_by_xpath(Locators.submit_CreateOrderButton).click()
         time.sleep(3)
         if "Thank you!" and "Your email address has been verified, and your registration is complete." in self.driver.page_source:
@@ -67,7 +66,7 @@ class TestPatient:
 
     def test_AccountSetup(self, setup, PatientLogin):
         self.driver = setup
-        self.driver.find_element_by_id(Locators.allergies).send_keys(datasheet.cell(2, 10).value)
+        self.driver.find_element_by_id(Locators.allergies).send_keys(datasheet.cell(2, 9).value)
         self.driver.find_element_by_xpath(Locators.continueButton).click()
         time.sleep(2)
         self.driver.find_element_by_id(Locators.payorAccountNumber).send_keys(number)
@@ -251,9 +250,9 @@ class TestSetting:
         time.sleep(2)
         assert 'Account' and 'Password' and 'Health Insurance' and 'Allergies' and 'Preference' in self.driver.page_source
         self.driver.find_element_by_xpath(Locators.patientPassword).click()
-        self.driver.find_element_by_id(Locators.currentPasswordID).send_keys(loginsheet.cell(2, 4).value)
-        self.driver.find_element_by_id(Locators.newPasswordID).send_keys(loginsheet.cell(2, 4).value)
-        self.driver.find_element_by_id(Locators.confirmPasswordID).send_keys(loginsheet.cell(2, 4).value)
+        self.driver.find_element_by_id(Locators.currentPasswordID).send_keys(loginSheet.cell(2, 4).value)
+        self.driver.find_element_by_id(Locators.newPasswordID).send_keys(loginSheet.cell(2, 4).value)
+        self.driver.find_element_by_id(Locators.confirmPasswordID).send_keys(loginSheet.cell(2, 4).value)
         self.driver.find_element_by_xpath(Locators.updateButton).click()
         self.driver.quit()
 
