@@ -1,5 +1,6 @@
 import time
 from Locators.Locators import Locators
+from Locators.PracticeLocators import PracticeLocators
 
 
 class LoginScreen:
@@ -33,7 +34,7 @@ class LoginScreen:
         self.driver.find_element_by_xpath(Locators.PatientForgotPasswordButton).click()
 
     def SubmitButton(self):
-        self.driver.find_element_by_xpath(Locators.submitButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.submitButton).click()
 
     def ClearAndEnterText(self):
         self.driver.find_element_by_xpath()

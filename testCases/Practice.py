@@ -1,10 +1,12 @@
 import time
 from openpyxl import load_workbook
-from Locators.Locators import Locators
+from Locators.PracticeLocators import PracticeLocators
+from Locators.PatientLocators import PatientLocators
 
 FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
-datasheet = datafile.get_sheet_by_name('Test Data')
+testData = datafile['Test Data']
+scriptData = datafile['Script Data']
 
 
 class TestPractice:
@@ -17,73 +19,75 @@ class TestPractice:
 
     def test_onetimeTemplate(self, setup, PracticeLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(Locators.orderTemplateScreen).click()
-        self.driver.find_element_by_link_text(Locators.createTemplateButton).click()
-        self.driver.find_element_by_xpath(Locators.selectOnetimeTemplate).click()
-        self.driver.find_element_by_xpath(Locators.templateTitle).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.continueButton).click()
-        self.driver.find_element_by_xpath(Locators.templateProductSearch).click()
-        self.driver.find_element_by_xpath("//*[text()='" + datasheet.cell(2, 5).value + "']").click()
-        self.driver.find_element_by_xpath(Locators.AddButton).click()
-        self.driver.find_element_by_xpath(Locators.ProductQuantity).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(Locators.Quantity).click()
-        self.driver.find_element_by_xpath(Locators.ProductRefilles).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(Locators.Quantity).click()
+        self.driver.find_element_by_link_text(PracticeLocators.orderTemplateScreen).click()
+        self.driver.find_element_by_link_text(PracticeLocators.createTemplateButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.selectOnetimeTemplate).click()
+        self.driver.find_element_by_xpath(PracticeLocators.templateTitle).send_keys(testData.cell(2, 6).value)
+        self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.templateProductSearch).send_keys(scriptData.cell(2, 1).value)
         time.sleep(2)
-        self.driver.find_element_by_xpath(Locators.DAWCheckbox).click()
+        self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 1).value + "']").click()
+        self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.ProductQuantity).click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(PracticeLocators.Quantity).click()
+        self.driver.find_element_by_xpath(PracticeLocators.ProductRefilles).click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(PracticeLocators.Quantity).click()
         time.sleep(2)
-        instruction = self.driver.find_element_by_xpath(Locators.productInstruction)
+        self.driver.find_element_by_xpath(PracticeLocators.DAWCheckbox).click()
+        time.sleep(2)
+        instruction = self.driver.find_element_by_xpath(PracticeLocators.productInstruction)
         instruction.click()
-        instruction.send_keys(datasheet.cell(2, 8).value)
-        self.driver.find_element_by_xpath(Locators.templateNotes).send_keys(datasheet.cell(2, 10).value)
-        self.driver.find_element_by_xpath(Locators.saveTemplateButton).click()
+        instruction.send_keys(testData.cell(2, 3).value)
+        self.driver.find_element_by_xpath(PracticeLocators.templateNotes).send_keys(testData.cell(2, 5).value)
+        self.driver.find_element_by_xpath(PracticeLocators.saveTemplateButton).click()
         self.driver.close()
 
     def test_subscriptionTemplate(self, setup, PracticeLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(Locators.orderTemplateScreen).click()
-        self.driver.find_element_by_link_text(Locators.createTemplateButton).click()
-        self.driver.find_element_by_xpath(Locators.selectSubscriptionTemplate).click()
-        self.driver.find_element_by_xpath(Locators.templateTitle).send_keys(datasheet.cell(2, 11).value)
-        self.driver.find_element_by_xpath(Locators.continueButton).click()
-        self.driver.find_element_by_xpath(Locators.templateProductSearch).click()
-        self.driver.find_element_by_xpath("//*[text()='" + datasheet.cell(2, 5).value + "']").click()
-        self.driver.find_element_by_xpath(Locators.addProductButton).click()
-        self.driver.find_element_by_xpath(Locators.ProductQuantity).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(Locators.Quantity).click()
-        self.driver.find_element_by_xpath(Locators.ProductRefilles).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(Locators.Quantity).click()
+        self.driver.find_element_by_link_text(PracticeLocators.orderTemplateScreen).click()
+        self.driver.find_element_by_link_text(PracticeLocators.createTemplateButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.selectSubscriptionTemplate).click()
+        self.driver.find_element_by_xpath(PracticeLocators.templateTitle).send_keys(testData.cell(2, 6).value)
+        self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.templateProductSearch).send_keys(scriptData.cell(2, 1).value)
         time.sleep(2)
-        self.driver.find_element_by_xpath(Locators.DAWCheckbox).click()
+        self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 1).value + "']").click()
+        self.driver.find_element_by_xpath(PracticeLocators.addProductButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.ProductQuantity).click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(PracticeLocators.Quantity).click()
+        self.driver.find_element_by_xpath(PracticeLocators.ProductRefilles).click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(PracticeLocators.Quantity).click()
         time.sleep(2)
-        instruction = self.driver.find_element_by_xpath(Locators.productInstruction)
+        self.driver.find_element_by_xpath(PracticeLocators.DAWCheckbox).click()
+        time.sleep(2)
+        instruction = self.driver.find_element_by_xpath(PracticeLocators.productInstruction)
         instruction.click()
-        instruction.send_keys(datasheet.cell(2, 8).value)
-        self.driver.find_element_by_xpath(Locators.templateNotes).send_keys(datasheet.cell(2, 10).value)
-        self.driver.find_element_by_xpath(Locators.saveTemplateButton).click()
+        instruction.send_keys(testData.cell(2, 3).value)
+        self.driver.find_element_by_xpath(PracticeLocators.templateNotes).send_keys(testData.cell(2, 5).value)
+        self.driver.find_element_by_xpath(PracticeLocators.saveTemplateButton).click()
         self.driver.close()
 
     def test_DropChart(self, setup, PracticeLogin):
         self.driver = setup
-        self.driver.find_element_by_partial_link_text(Locators.documentsScreen).click()
-        self.driver.find_element_by_xpath(Locators.newDocuments).click()
-        self.driver.find_element_by_xpath(Locators.documentsDoctorSearchbox).click()
+        self.driver.find_element_by_partial_link_text(PracticeLocators.documentsScreen).click()
+        self.driver.find_element_by_xpath(PracticeLocators.newDocuments).click()
+        self.driver.find_element_by_xpath(PracticeLocators.documentsDoctorSearchbox).click()
         time.sleep(2)
-        self.driver.find_element_by_xpath(Locators.selectDoctor).click()
-        self.driver.find_element_by_xpath(Locators.selectDocumentsSearchbox).click()
+        self.driver.find_element_by_xpath(PracticeLocators.selectDoctor).click()
+        self.driver.find_element_by_xpath(PracticeLocators.selectDocumentsSearchbox).click()
         time.sleep(1)
-        self.driver.find_element_by_xpath(Locators.documentsType).click()
-        self.driver.find_element_by_xpath(Locators.documentTitle).send_keys('WL')
-        self.driver.find_element_by_xpath(Locators.continueButton).click()
+        self.driver.find_element_by_xpath(PracticeLocators.documentsType).click()
+        self.driver.find_element_by_xpath(PracticeLocators.documentTitle).send_keys('WL')
+        self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
         self.driver.implicitly_wait(5)
-        self.driver.find_element_by_css_selector(Locators.uploadFile).send_keys(
+        self.driver.find_element_by_css_selector(PracticeLocators.uploadFile).send_keys(
             "C:/Users/Administrator/Downloads/Test Files/Welcome Letter.pdf")
         time.sleep(5)
-        SubmitButton = self.driver.find_element_by_xpath(Locators.submitButton)
+        SubmitButton = self.driver.find_element_by_xpath(PracticeLocators.submitButton)
         if SubmitButton.is_enabled():
             SubmitButton.click()
         else:
@@ -225,6 +229,6 @@ class TestPractice:
     def test_CheckUserOrder(self, setup, PracticeLogin):
         self.driver = setup
         time.sleep(3)
-        assert self.driver.find_element_by_xpath(Locators.myQueueOrderDate) in self.driver.page_source
-        assert self.driver.find_element_by_xpath(Locators.myQueuePatientName) in self.driver.page_source
+        assert self.driver.find_element_by_xpath(PatientLocators.myQueueOrderDate) in self.driver.page_source
+        assert self.driver.find_element_by_xpath(PatientLocators.myQueuePatientName) in self.driver.page_source
         # Pending bacause select indian timezone at the time of account creation and append created user name for Created By column

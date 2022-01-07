@@ -9,6 +9,7 @@ from pageObjects.LoginPage import LoginScreen
 from pageObjects.BaseFile import CommanFlow
 from webdriver_manager.chrome import ChromeDriverManager
 from Locators.Locators import Locators
+from Locators.PracticeLocators import PracticeLocators
 
 
 faker = Faker()
@@ -21,8 +22,8 @@ EmailAddress = FirstName + "." + LastName + "@mailinator.com"
 
 FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
-datasheet = datafile['Test Data']
-loginSheet = datafile["Login Credentials"]
+testData = datafile['Test Data']
+loginData = datafile["Login Credentials"]
 scriptData = datafile['Script Data']
 
 
@@ -36,11 +37,11 @@ def setup():
 @pytest.fixture()
 def MasterLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(2, 2).value)
+    driver.get(loginData.cell(2, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(2, 3).value)
-    login.SetPassword(loginSheet.cell(2, 4).value)
+    login.SetUsername(loginData.cell(2, 3).value)
+    login.SetPassword(loginData.cell(2, 4).value)
     login.SignIn()
     driver.implicitly_wait(10)
 
@@ -48,10 +49,10 @@ def MasterLogin(setup):
 @pytest.fixture()
 def MasterForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(2, 2).value)
+    driver.get(loginData.cell(2, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(2, 3).value)
+    login.ForgotPassword(loginData.cell(2, 3).value)
     time.sleep(1)
     login.SubmitButton()
 
@@ -59,25 +60,25 @@ def MasterForgotPassword(setup):
 @pytest.fixture()
 def PracticeLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(3, 2).value)
+    driver.get(loginData.cell(3, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(3, 3).value)
-    login.SetPassword(loginSheet.cell(3, 4).value)
+    login.SetUsername(loginData.cell(3, 3).value)
+    login.SetPassword(loginData.cell(3, 4).value)
     login.SignIn()
     checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
     if checkboxes:
         checkboxes[0].click()
-        driver.find_element(By.XPATH, Locators.continueButton).click()
+        driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
 
 
 @pytest.fixture()
 def PracticeForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(3, 2).value)
+    driver.get(loginData.cell(3, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(3, 3).value)
+    login.ForgotPassword(loginData.cell(3, 3).value)
     time.sleep(1)
     login.SubmitButton()
 
@@ -85,25 +86,25 @@ def PracticeForgotPassword(setup):
 @pytest.fixture()
 def HubLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(4, 2).value)
+    driver.get(loginData.cell(4, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(4, 3).value)
-    login.SetPassword(loginSheet.cell(4, 4).value)
+    login.SetUsername(loginData.cell(4, 3).value)
+    login.SetPassword(loginData.cell(4, 4).value)
     login.SignIn()
     checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
     if checkboxes:
         checkboxes[0].click()
-        driver.find_element(By.XPATH, Locators.continueButton).click()
+        driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
 
 
 @pytest.fixture()
 def HubForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(4, 2).value)
+    driver.get(loginData.cell(4, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(4, 3).value)
+    login.ForgotPassword(loginData.cell(4, 3).value)
     time.sleep(1)
     login.SubmitButton()
 
@@ -111,25 +112,25 @@ def HubForgotPassword(setup):
 @pytest.fixture()
 def RXPharmaLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(5, 2).value)
+    driver.get(loginData.cell(5, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(5, 3).value)
-    login.SetPassword(loginSheet.cell(5, 4).value)
+    login.SetUsername(loginData.cell(5, 3).value)
+    login.SetPassword(loginData.cell(5, 4).value)
     login.SignIn()
     checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
     if checkboxes:
         checkboxes[0].click()
-        driver.find_element(By.XPATH, Locators.continueButton).click()
+        driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
 
 
 @pytest.fixture()
 def RXPharmaForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(5, 2).value)
+    driver.get(loginData.cell(5, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(5, 3).value)
+    login.ForgotPassword(loginData.cell(5, 3).value)
     time.sleep(1)
     login.SubmitButton()
 
@@ -137,25 +138,25 @@ def RXPharmaForgotPassword(setup):
 @pytest.fixture()
 def OTCPharmaLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(6, 2).value)
+    driver.get(loginData.cell(6, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(6, 3).value)
-    login.SetPassword(loginSheet.cell(6, 4).value)
+    login.SetUsername(loginData.cell(6, 3).value)
+    login.SetPassword(loginData.cell(6, 4).value)
     login.SignIn()
     checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
     if checkboxes:
         checkboxes[0].click()
-        driver.find_element(By.XPATH, Locators.continueButton).click()
+        driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
 
 
 @pytest.fixture()
 def OTCPharmaForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(6, 2).value)
+    driver.get(loginData.cell(6, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(6, 3).value)
+    login.ForgotPassword(loginData.cell(6, 3).value)
     time.sleep(1)
     login.SubmitButton()
 
@@ -163,25 +164,25 @@ def OTCPharmaForgotPassword(setup):
 @pytest.fixture()
 def CompoundPharmaLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(7, 2).value)
+    driver.get(loginData.cell(7, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(7, 3).value)
-    login.SetPassword(loginSheet.cell(7, 4).value)
+    login.SetUsername(loginData.cell(7, 3).value)
+    login.SetPassword(loginData.cell(7, 4).value)
     login.SignIn()
     checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
     if checkboxes:
         checkboxes[0].click()
-        driver.find_element(By.XPATH, Locators.continueButton).click()
+        driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
 
 
 @pytest.fixture()
 def CompoundPharmaForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(7, 2).value)
+    driver.get(loginData.cell(7, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.ForgotPassword(loginSheet.cell(7, 3).value)
+    login.ForgotPassword(loginData.cell(7, 3).value)
     time.sleep(1)
     login.SubmitButton()
 
@@ -189,11 +190,11 @@ def CompoundPharmaForgotPassword(setup):
 @pytest.fixture()
 def PatientLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(8, 2).value)
+    driver.get(loginData.cell(8, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(datasheet.cell(2, 3).value)
-    login.SetPassword(loginSheet.cell(8, 4).value)
+    login.SetUsername(loginData.cell(8, 3).value)
+    login.SetPassword(loginData.cell(8, 4).value)
     login.SignIn()
     time.sleep(3)
 
@@ -201,10 +202,10 @@ def PatientLogin(setup):
 @pytest.fixture()
 def PatientForgotPassword(setup):
     driver = setup
-    driver.get(loginSheet.cell(8, 2).value)
+    driver.get(loginData.cell(8, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.PatientForgotPassword(datasheet.cell(2, 3).value)
+    login.PatientForgotPassword(loginData.cell(3, 3).value)
     time.sleep(1)
     login.SendResetEmail()
 
@@ -212,16 +213,16 @@ def PatientForgotPassword(setup):
 @pytest.fixture()
 def UserLogin(setup):
     driver = setup
-    driver.get(loginSheet.cell(9, 2).value)
+    driver.get(loginData.cell(9, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
-    login.SetUsername(loginSheet.cell(9, 3).value)
-    login.SetPassword(loginSheet.cell(9, 4).value)
+    login.SetUsername(loginData.cell(9, 3).value)
+    login.SetPassword(loginData.cell(9, 4).value)
     login.SignIn()
     checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
     if checkboxes:
         checkboxes[0].click()
-        driver.find_element(By.XPATH, Locators.continueButton).click()
+        driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
 
 
 @pytest.fixture()
