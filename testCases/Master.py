@@ -1,14 +1,14 @@
 import time
+import random
+from faker import Faker
 from datetime import date
 from openpyxl import load_workbook
+from Locators.Locators import Locators
 from selenium.webdriver.common.by import By
+from Locators.MasterLocators import MasterLocators
+from Locators.PracticeLocators import PracticeLocators
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Locators.PracticeLocators import PracticeLocators
-from Locators.MasterLocators import MasterLocators
-from Locators.Locators import Locators
-from faker import Faker
-import random
 
 FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
@@ -138,61 +138,61 @@ class TestProductCreation:
 
 
 class TestDispenserCreation:
-    def test_CreateHubDispenser(self, setup, MasterLogin):
-        self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.dispenserScreen).click()
-        self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
-        self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Hub")
-        scriptData.cell(2, 4).value = "Selenium " + firstName + " Hub"
-        loginData.cell(4, 3).value = hubDispenserEmail + emailAddress
-        datafile.save(FilePath)
-        self.driver.find_element_by_name(MasterLocators.emailField).send_keys(loginData.cell(4, 3).value)
-        self.driver.find_element_by_name(MasterLocators.phoneField).send_keys(PhoneNumber)
-        self.driver.find_element_by_name(MasterLocators.faxField).send_keys(PhoneNumber)
-        self.driver.find_element_by_name(MasterLocators.addressStreet1Field).send_keys(street_1)
-        self.driver.find_element_by_name(MasterLocators.addressCityField).send_keys(city)
-        self.driver.find_element_by_xpath(MasterLocators.selectState).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(PracticeLocators.state).click()
-        self.driver.find_element_by_name(MasterLocators.addressZipCodeField).send_keys(zipCode)
-        self.driver.find_element_by_xpath(MasterLocators.selectTimezone).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.timeZoneValue).click()
-        self.driver.find_element_by_xpath(MasterLocators.selectHubCategory).click()
-        self.driver.find_element_by_name(MasterLocators.npiField).send_keys(random.randint(0, 9999999))
-        self.driver.find_element_by_name(MasterLocators.licenseField).send_keys(random.randint(0, 9999999))
-        self.driver.find_element_by_name(MasterLocators.adminFirstNameField).send_keys(firstName)
-        self.driver.find_element_by_name(MasterLocators.adminLastnameField).send_keys(lastName)
-        self.driver.find_element_by_name(MasterLocators.adminEmailField).send_keys(loginData.cell(4, 3).value)
-        self.driver.find_element_by_name(MasterLocators.adminPhoneField).send_keys(PhoneNumber)
-        self.driver.find_element_by_xpath(PracticeLocators.createAccountButton).click()
-        time.sleep(2)
-        assert "Congratulations. You have successfully created a new dispenser account."
-        self.driver.find_element_by_xpath(MasterLocators.dismissButton).click()
-        self.driver.quit()
-
-    def test_CreateHubEmailAndSetPassword(self, setup):
-        self.driver = setup
-        self.driver.get(Locators.malinatorLink)
-        self.driver.implicitly_wait(10)
-        self.driver.find_element_by_id(Locators.searchBoxID).send_keys(loginData.cell(4, 3).value)
-        self.driver.find_element_by_xpath(Locators.goButtonLink).click()
-        self.driver.implicitly_wait(10)
-        self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
-        time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
-        self.driver.switch_to.window(self.driver.window_handles[1])
-        self.driver.implicitly_wait(5)
-        self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
-        self.driver.find_element_by_name(MasterLocators.confirmPassword).send_keys(loginData.cell(3, 4).value)
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.setPasswordButton).click()
-        time.sleep(2)
-        assert "Password set successfully"
-        self.driver.find_element_by_class_name(MasterLocators.closeButton).click()
-        self.driver.switch_to.window(self.driver.window_handles[0])
-        self.driver.quit()
+    # def test_CreateHubDispenser(self, setup, MasterLogin):
+    #     self.driver = setup
+    #     self.driver.find_element_by_link_text(MasterLocators.dispenserScreen).click()
+    #     self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
+    #     self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Hub")
+    #     scriptData.cell(2, 4).value = "Selenium " + firstName + " Hub"
+    #     loginData.cell(4, 3).value = hubDispenserEmail + emailAddress
+    #     datafile.save(FilePath)
+    #     self.driver.find_element_by_name(MasterLocators.emailField).send_keys(loginData.cell(4, 3).value)
+    #     self.driver.find_element_by_name(MasterLocators.phoneField).send_keys(PhoneNumber)
+    #     self.driver.find_element_by_name(MasterLocators.faxField).send_keys(PhoneNumber)
+    #     self.driver.find_element_by_name(MasterLocators.addressStreet1Field).send_keys(street_1)
+    #     self.driver.find_element_by_name(MasterLocators.addressCityField).send_keys(city)
+    #     self.driver.find_element_by_xpath(MasterLocators.selectState).click()
+    #     time.sleep(1)
+    #     self.driver.find_element_by_xpath(PracticeLocators.state).click()
+    #     self.driver.find_element_by_name(MasterLocators.addressZipCodeField).send_keys(zipCode)
+    #     self.driver.find_element_by_xpath(MasterLocators.selectTimezone).click()
+    #     time.sleep(1)
+    #     self.driver.find_element_by_xpath(MasterLocators.timeZoneValue).click()
+    #     self.driver.find_element_by_xpath(MasterLocators.selectHubCategory).click()
+    #     self.driver.find_element_by_name(MasterLocators.npiField).send_keys(random.randint(0, 9999999))
+    #     self.driver.find_element_by_name(MasterLocators.licenseField).send_keys(random.randint(0, 9999999))
+    #     self.driver.find_element_by_name(MasterLocators.adminFirstNameField).send_keys(firstName)
+    #     self.driver.find_element_by_name(MasterLocators.adminLastnameField).send_keys(lastName)
+    #     self.driver.find_element_by_name(MasterLocators.adminEmailField).send_keys(loginData.cell(4, 3).value)
+    #     self.driver.find_element_by_name(MasterLocators.adminPhoneField).send_keys(PhoneNumber)
+    #     self.driver.find_element_by_xpath(PracticeLocators.createAccountButton).click()
+    #     time.sleep(2)
+    #     assert "Congratulations. You have successfully created a new dispenser account."
+    #     self.driver.find_element_by_xpath(MasterLocators.dismissButton).click()
+    #     self.driver.quit()
+    #
+    # def test_CreateHubEmailAndSetPassword(self, setup):
+    #     self.driver = setup
+    #     self.driver.get(Locators.malinatorLink)
+    #     self.driver.implicitly_wait(10)
+    #     self.driver.find_element_by_id(Locators.searchBoxID).send_keys(loginData.cell(4, 3).value)
+    #     self.driver.find_element_by_xpath(Locators.goButtonLink).click()
+    #     self.driver.implicitly_wait(10)
+    #     self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
+    #     time.sleep(3)
+    #     WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+    #     WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
+    #     self.driver.switch_to.window(self.driver.window_handles[1])
+    #     self.driver.implicitly_wait(5)
+    #     self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
+    #     self.driver.find_element_by_name(MasterLocators.confirmPassword).send_keys(loginData.cell(3, 4).value)
+    #     time.sleep(1)
+    #     self.driver.find_element_by_xpath(MasterLocators.setPasswordButton).click()
+    #     time.sleep(2)
+    #     assert "Password set successfully"
+    #     self.driver.find_element_by_class_name(MasterLocators.closeButton).click()
+    #     self.driver.switch_to.window(self.driver.window_handles[0])
+    #     self.driver.quit()
 
     def test_CreateRXDispenser(self, setup, MasterLogin):
         self.driver = setup

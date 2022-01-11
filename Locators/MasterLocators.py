@@ -66,7 +66,7 @@ class MasterLocators:
     userScreen = 'Users'
     practiceRadio = '//label[contains(text(),"Practice")]'
     searchPractice = '//*[@placeholder="Search for an account"]'
-    selectUserPractice = "(//*[text()='"+scriptData.cell(2, 8).value+"'])[1]"
+    selectUserPractice = "(//*[text()='"+scriptData.cell(2, 8).value+" Practice'])[1]"
     userType = "//*[text()='Clerk']"
 
     # Payor Creation

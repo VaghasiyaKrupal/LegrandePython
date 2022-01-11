@@ -1,16 +1,15 @@
 import time
-from datetime import date
-from faker import Faker
-from openpyxl import load_workbook
-from selenium import webdriver
 import pytest
-from selenium.webdriver.common.by import By
-from pageObjects.LoginPage import LoginScreen
-from pageObjects.BaseFile import CommanFlow
-from webdriver_manager.chrome import ChromeDriverManager
+from faker import Faker
+from datetime import date
+from selenium import webdriver
+from openpyxl import load_workbook
 from Locators.Locators import Locators
+from selenium.webdriver.common.by import By
+from pageObjects.BaseFile import CommanFlow
+from pageObjects.LoginPage import LoginScreen
 from Locators.PracticeLocators import PracticeLocators
-
+from webdriver_manager.chrome import ChromeDriverManager
 
 faker = Faker()
 today = date.today()
@@ -66,7 +65,7 @@ def PracticeLogin(setup):
     login.SetUsername(loginData.cell(3, 3).value)
     login.SetPassword(loginData.cell(3, 4).value)
     login.SignIn()
-    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    checkboxes = driver.find_elements(By.XPATH, Locators.termsCheckbox)
     if checkboxes:
         checkboxes[0].click()
         driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
@@ -92,7 +91,7 @@ def HubLogin(setup):
     login.SetUsername(loginData.cell(4, 3).value)
     login.SetPassword(loginData.cell(4, 4).value)
     login.SignIn()
-    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    checkboxes = driver.find_elements(By.XPATH, Locators.termsCheckbox)
     if checkboxes:
         checkboxes[0].click()
         driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
@@ -118,7 +117,7 @@ def RXPharmaLogin(setup):
     login.SetUsername(loginData.cell(5, 3).value)
     login.SetPassword(loginData.cell(5, 4).value)
     login.SignIn()
-    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    checkboxes = driver.find_elements(By.XPATH, Locators.termsCheckbox)
     if checkboxes:
         checkboxes[0].click()
         driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
@@ -144,7 +143,7 @@ def OTCPharmaLogin(setup):
     login.SetUsername(loginData.cell(6, 3).value)
     login.SetPassword(loginData.cell(6, 4).value)
     login.SignIn()
-    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    checkboxes = driver.find_elements(By.XPATH, Locators.termsCheckbox)
     if checkboxes:
         checkboxes[0].click()
         driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
@@ -170,7 +169,7 @@ def CompoundPharmaLogin(setup):
     login.SetUsername(loginData.cell(7, 3).value)
     login.SetPassword(loginData.cell(7, 4).value)
     login.SignIn()
-    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    checkboxes = driver.find_elements(By.XPATH, Locators.termsCheckbox)
     if checkboxes:
         checkboxes[0].click()
         driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
@@ -219,7 +218,7 @@ def UserLogin(setup):
     login.SetUsername(loginData.cell(9, 3).value)
     login.SetPassword(loginData.cell(9, 4).value)
     login.SignIn()
-    checkboxes = driver.find_elements(By.XPATH, '//div[@class="modal-dialog"]//*[@class="checkbox checkbox-success"]')
+    checkboxes = driver.find_elements(By.XPATH, Locators.termsCheckbox)
     if checkboxes:
         checkboxes[0].click()
         driver.find_element(By.XPATH, PracticeLocators.continueButton).click()
@@ -342,3 +341,52 @@ def EditOrder(setup):
     driver = setup
     editOrder = CommanFlow(driver)
     editOrder.EditOrder()
+
+
+@pytest.fixture()
+def EditPatientDetails(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.EditPatientDetails()
+
+
+@pytest.fixture()
+def CompleteOrder(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.CompleteOrder()
+
+
+@pytest.fixture()
+def CancelOrder(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.CancelOrder()
+
+
+@pytest.fixture()
+def SendOutOfNetwork(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.SendOutOfNetwork()
+
+
+@pytest.fixture()
+def ApproveOrderFromPractice(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.ApproveOrderFromPractice()
+
+
+@pytest.fixture()
+def PatientApprovalAndTransferOrder(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.PatientApprovalAndTransfer()
+
+
+@pytest.fixture()
+def ProcessPayment(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.ProcessPayment()

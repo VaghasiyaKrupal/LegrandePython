@@ -38,7 +38,7 @@ class PracticeLocators:
     AddButton = "//*[@class='is-flex row']//*[text()='Add']"
     addProductButton = "//*[text()='Add']"
     ProductQuantity = "//*[@data-test='amount']//*[@class='Select-arrow']"
-    Quantity = '//*[@class="Select-menu-outer"]//*[text()="2"]'
+    Quantity = '//*[@class="Select-menu-outer"]//div[@aria-label="2"]'
     ProductRefilles = '//*[@data-test="refills"]//*[@class="Select-arrow"]'
     DAWCheckbox = '//*[@class="sc-eMigcr cVTyKh"]'
     productInstruction = '//*[@placeholder="Enter Rx Instructions"]'
@@ -74,17 +74,12 @@ class PracticeLocators:
     cardName = 'name'
     cardNumber = 'number'
     maskCardNumberField = 'masked_card'
-    maskCardNumber = '02a600c0170018008292;542418******1765=3406?*89b080e99b450a0c0523757a5c28d6939c12f8519509d1ac000000000000000000000000000000000000000030343952303337373034ffff98765400068000271a4203'
     cardCVV = 'cvv'
-    cardMonthDropdown = '(//*[@id="card"]//*[@class="Select-arrow"])[2]'
-    cardYearDropdown = '(//*[@id="card"]//*[@class="Select-arrow"])[3]'
-    cardMonth = "//*[@class='Select-menu-outer']//*[text()='" + testData.cell(2, 10).value + "']"
-    cardYear = "//*[@class='Select-menu-outer']//*[text()='" + str(testData.cell(2, 11).value) + "']"
     addressLine1 = 'street_1'
     addressLine2 = 'street_2'
     addressCity = 'city'
     addressState = '//*[@id="shipping_address"]//*[@class="Select-arrow"]'
     addressZipCode = 'zip'
-    state = "//div[@class='Select-menu-outer']//div[@role='option' and text()='" + testData.cell(2, 15).value + "']"
+    state = "//div[@class='Select-menu-outer']//div[@aria-label='" + testData.cell(2, 15).value + "']"
     updateOrderButton = '//*[text()="Update Order"]'
 

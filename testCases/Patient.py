@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from openpyxl import load_workbook
+from Locators.DispenserLocators import DispenserLocators
 from Locators.Locators import Locators
 from Locators.PatientLocators import PatientLocators
 from Locators.PracticeLocators import PracticeLocators
@@ -118,7 +119,7 @@ class TestPatient:
         self.driver.find_element_by_xpath("//h2[contains(text(),'Manage Your Plan')]").click()
         self.driver.find_element_by_xpath('//input[@placeholder="MM/DD/YYYY"]').click()
         self.driver.find_element_by_xpath(PatientLocators.newDate).click()
-        self.driver.find_element_by_xpath(Locators.updateButton).click()
+        self.driver.find_element_by_xpath(DispenserLocators.updateButton).click()
         time.sleep(2)
         assert "You have successfully saved your updates." in self.driver.page_source
         self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
@@ -131,7 +132,7 @@ class TestPatient:
         self.driver.find_element_by_xpath("//h2[contains(text(),'Manage Your Plan')]").click()
         self.driver.find_element_by_xpath(PatientLocators.cancelPlanCheckbox).click()
         # time.sleep(1)
-        self.driver.find_element_by_xpath(Locators.updateButton).click()
+        self.driver.find_element_by_xpath(DispenserLocators.updateButton).click()
         # time.sleep(1)
         self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
         # time.sleep(1)
@@ -255,7 +256,7 @@ class TestSetting:
         self.driver.find_element_by_id(PatientLocators.currentPasswordID).send_keys(loginData.cell(2, 4).value)
         self.driver.find_element_by_id(PatientLocators.newPasswordID).send_keys(loginData.cell(2, 4).value)
         self.driver.find_element_by_id(PatientLocators.confirmPasswordID).send_keys(loginData.cell(2, 4).value)
-        self.driver.find_element_by_xpath(Locators.updateButton).click()
+        self.driver.find_element_by_xpath(DispenserLocators.updateButton).click()
         self.driver.quit()
 
     def test_AddInsurance(self, setup, PatientLogin):

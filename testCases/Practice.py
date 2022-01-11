@@ -100,7 +100,7 @@ class TestPractice:
     def test_PatientMainSearch(self, setup, PracticeLogin, PatientMainSearch):
         self.driver = setup
 
-    def test_CreatingRXOnetimeSkipPayment(self, setup, PracticeLogin, OnetimeRXSkipPayment):
+    def test_OnetimeRXSkipPayment(self, setup, PracticeLogin, OnetimeRXSkipPayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -114,8 +114,9 @@ class TestPractice:
         self.driver.find_element_by_link_text('Orders').click()
         self.driver.find_element_by_xpath('//table/tbody/tr[1]/td[2]/a').click()
         assert 'Prescription & Order Details'
+        self.driver.quit()
 
-    def test_CreatingOTCOnetimeSkipPayment(self, setup, PracticeLogin, OnetimeOTCSkipPayment):
+    def test_OnetimeOTCSkipPayment(self, setup, PracticeLogin, OnetimeOTCSkipPayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -124,7 +125,7 @@ class TestPractice:
             print("\nOrder: Onetime OTC with skip payment, is not created")
         self.driver.close()
 
-    def test_CreatingCompoundOnetimeSkipPayment(self, setup, PracticeLogin, OnetimeCompoundSkipPayment):
+    def test_OnetimeCompoundSkipPayment(self, setup, PracticeLogin, OnetimeCompoundSkipPayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -133,7 +134,7 @@ class TestPractice:
             print("\nOrder: Onetime Compound with skip payment, is not created")
         self.driver.close()
 
-    def test_CreatingRXSubscriptionSkipPayment(self, setup, PracticeLogin, SubscriptionRXSkipPayment):
+    def test_SubscriptionRXSkipPayment(self, setup, PracticeLogin, SubscriptionRXSkipPayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -142,7 +143,7 @@ class TestPractice:
             print("\nOrder: Subscription RX with Skip payment, is not created")
         self.driver.close()
 
-    def test_CreatingOTCSubscriptionSkipPayment(self, setup, PracticeLogin, SubscriptionOTCSkipPayment):
+    def test_SubscriptionOTCSkipPayment(self, setup, PracticeLogin, SubscriptionOTCSkipPayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -151,7 +152,7 @@ class TestPractice:
             print("\nOrder: Subscription OTC with Skip payment, is not created")
         self.driver.close()
 
-    def test_CreatingCompoundSubscriptionSkipPayment(self, setup, PracticeLogin, SubscriptionCompoundSkipPayment):
+    def test_SubscriptionCompoundSkipPayment(self, setup, PracticeLogin, SubscriptionCompoundSkipPayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -169,7 +170,7 @@ class TestPractice:
             print("\nYour order is not update")
         self.driver.close()
 
-    def test_RXOnetimeProvidePayment(self, setup, PracticeLogin, OnetimeRXProvidePayment):
+    def test_OnetimeRXProvidePayment(self, setup, PracticeLogin, OnetimeRXProvidePayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -178,7 +179,7 @@ class TestPractice:
             print("\nOrder: Onetime RX with provide payment, is not created")
         self.driver.close()
 
-    def test_OTCOnetimeProvidePayment(self, setup, PracticeLogin, OnetimeOTCProvidePayment):
+    def test_OnetimeOTCProvidePayment(self, setup, PracticeLogin, OnetimeOTCProvidePayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -187,7 +188,7 @@ class TestPractice:
             print("\nOrder: Onetime OTC with provide payment, is not created")
         self.driver.close()
 
-    def test_CompoundOnetimeProvidePayment(self, setup, PracticeLogin, OnetimeCompoundProvidePayment):
+    def test_OnetimeCompoundProvidePayment(self, setup, PracticeLogin, OnetimeCompoundProvidePayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -196,7 +197,7 @@ class TestPractice:
             print("\nOrder: Onetime Compound with provide payment, is not created")
         self.driver.close()
 
-    def test_RXSubscriptionProvidePayment(self, setup, PracticeLogin, SubscriptionRXProvidePayment):
+    def test_SubscriptionRXProvidePayment(self, setup, PracticeLogin, SubscriptionRXProvidePayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -205,7 +206,7 @@ class TestPractice:
             print("\nOrder: Subscription RX with provide payment, is not created")
         self.driver.close()
 
-    def test_OTCSubscriptionProvidePayment(self, setup, PracticeLogin, SubscriptionOTCProvidePayment):
+    def test_SubscriptionOTCProvidePayment(self, setup, PracticeLogin, SubscriptionOTCProvidePayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -214,7 +215,7 @@ class TestPractice:
             print("\nOrder: Subscription OTC with provide payment, is not created")
         self.driver.close()
 
-    def test_CompoundSubscriptionProvidePayment(self, setup, PracticeLogin, SubscriptionCompoundProvidePayment):
+    def test_SubscriptionCompoundProvidePayment(self, setup, PracticeLogin, SubscriptionCompoundProvidePayment):
         self.driver = setup
         if "You're all set!" in self.driver.page_source:
             self.driver.find_element_by_partial_link_text("Return to Dashboard").click()
@@ -225,10 +226,11 @@ class TestPractice:
 
     def test_CreateOrderFromUserAccount(self, setup, UserLogin, OnetimeRXSkipPayment):
         self.driver = setup
+        self.driver.quit()
 
     def test_CheckUserOrder(self, setup, PracticeLogin):
         self.driver = setup
         time.sleep(3)
-        assert self.driver.find_element_by_xpath(PatientLocators.myQueueOrderDate) in self.driver.page_source
-        assert self.driver.find_element_by_xpath(PatientLocators.myQueuePatientName) in self.driver.page_source
-        # Pending bacause select indian timezone at the time of account creation and append created user name for Created By column
+        assert self.driver.find_element_by_xpath(PatientLocators.myQueueOrderDate)
+        assert self.driver.find_element_by_xpath(PatientLocators.myQueuePatientName)
+        self.driver.quit()

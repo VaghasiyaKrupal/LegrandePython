@@ -2,3 +2,4 @@
 Reports
 Screenshots
 venv
+.pytest_cache
