@@ -651,7 +651,6 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.addressState).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(PracticeLocators.state).click()
-        time.sleep(7)
         addressZipcode = self.driver.find_element_by_name(PracticeLocators.addressZipCode)
         addressZipcode.clear()
         addressZipcode.send_keys(testData.cell(2, 16).value)
