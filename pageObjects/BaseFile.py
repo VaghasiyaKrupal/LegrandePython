@@ -1,14 +1,18 @@
+import json
 import time
 from faker import Faker
 from datetime import date
+from gzip import decompress
 from openpyxl import load_workbook
-from selenium.webdriver import Keys
 from Locators.Locators import Locators
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from Locators.MasterLocators import MasterLocators
 from Locators.PatientLocators import PatientLocators
 from Locators.PracticeLocators import PracticeLocators
 from Locators.DispenserLocators import DispenserLocators
+
 
 FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
@@ -47,7 +51,6 @@ class CommanFlow:
             print("\nPatient Created Successfully")
         else:
             print("\nPatient not Created")
-        self.driver.close()
 
     def CreateUser(self):
         self.driver.find_element_by_class_name(PracticeLocators.accountLinkLabel).click()
@@ -68,7 +71,6 @@ class CommanFlow:
             print("\nUser created successfully")
         else:
             print("\nUser not created")
-        self.driver.close()
 
     def PatientMainSearch(self):
         self.driver.find_element_by_class_name(PracticeLocators.mainPatientSearch).click()
@@ -82,7 +84,6 @@ class CommanFlow:
                 print("\nOrder not created for " + testData.cell(2, 1).value + ".")
         except:
             print("\nPatient: " + testData.cell(2, 1).value + " not found...")
-        self.driver.close()
 
     def ChangeProductPrice(self):
         self.driver.find_element_by_class_name(PracticeLocators.accountLinkLabel).click()
@@ -96,7 +97,6 @@ class CommanFlow:
             print('\nProduct price changed successfully')
         else:
             print('\nProduct price not changed')
-        self.driver.close()
 
     def OnetimeRXSkipPayment(self):
         self.driver.implicitly_wait(20)
@@ -145,14 +145,38 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(testData.cell(2, 5).value)
+            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+                testData.cell(2, 5).value)
             pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def OnetimeOTCSkipPayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -208,7 +232,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def OnetimeCompoundSkipPayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -264,7 +311,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def SubscriptionRXSkipPayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -280,7 +350,8 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
-        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(scriptData.cell(2, 1).value)
+        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(
+            scriptData.cell(2, 1).value)
         time.sleep(2)
         self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 1).value + "']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
@@ -324,7 +395,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def SubscriptionOTCSkipPayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -340,7 +434,8 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
-        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(scriptData.cell(2, 2).value)
+        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(
+            scriptData.cell(2, 2).value)
         time.sleep(2)
         self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 2).value + "']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
@@ -381,7 +476,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def SubscriptionCompoundSkipPayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -397,7 +515,8 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
-        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(scriptData.cell(2, 3).value)
+        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(
+            scriptData.cell(2, 3).value)
         time.sleep(2)
         self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 3).value + "']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
@@ -442,7 +561,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def OnetimeRXProvidePayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -489,17 +631,10 @@ class CommanFlow:
             EditPayment[0].click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
-
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -538,7 +673,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def OnetimeOTCProvidePayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -549,7 +707,8 @@ class CommanFlow:
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath("(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        self.driver.find_element_by_xpath(
+            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 2).value)
@@ -584,17 +743,10 @@ class CommanFlow:
             EditPayment[0].click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
-
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -628,7 +780,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def OnetimeCompoundProvidePayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -639,7 +814,8 @@ class CommanFlow:
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath("(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        self.driver.find_element_by_xpath(
+            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 3).value)
@@ -674,17 +850,10 @@ class CommanFlow:
             EditPayment[0].click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
-
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -718,7 +887,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def SubscriptionRXProvidePayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -729,12 +921,14 @@ class CommanFlow:
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath("(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        self.driver.find_element_by_xpath(
+            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         time.sleep(2)
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
-        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(scriptData.cell(2, 1).value)
+        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(
+            scriptData.cell(2, 1).value)
         time.sleep(2)
         self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 1).value + "']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
@@ -766,17 +960,10 @@ class CommanFlow:
             EditPayment[0].click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
-
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -810,7 +997,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def SubscriptionOTCProvidePayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -821,12 +1031,14 @@ class CommanFlow:
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath("(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        self.driver.find_element_by_xpath(
+            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         time.sleep(2)
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
-        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(scriptData.cell(2, 2).value)
+        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(
+            scriptData.cell(2, 2).value)
         time.sleep(2)
         self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 2).value + "']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
@@ -858,17 +1070,10 @@ class CommanFlow:
             EditPayment[0].click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
-
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -902,7 +1107,30 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def SubscriptionCompoundProvidePayment(self):
         self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
@@ -913,12 +1141,14 @@ class CommanFlow:
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath("(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        self.driver.find_element_by_xpath(
+            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         time.sleep(2)
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
-        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(scriptData.cell(2, 3).value)
+        self.driver.find_element_by_xpath(PracticeLocators.subscriptionProductSearch).send_keys(
+            scriptData.cell(2, 3).value)
         time.sleep(2)
         self.driver.find_element_by_xpath("//*[text()='" + scriptData.cell(2, 3).value + "']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
@@ -953,17 +1183,10 @@ class CommanFlow:
             EditPayment[0].click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
-
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -997,18 +1220,42 @@ class CommanFlow:
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
         createOrderButton = self.driver.find_element_by_xpath(PracticeLocators.submit_CreateOrderButton)
         self.driver.execute_script("arguments[0].click()", createOrderButton)
-        time.sleep(7)
+        time.sleep(5)
+        order_id = None
+        for request in self.driver.requests:
+            if request.response:
+                if request.method == 'POST' and (
+                        request.url.__contains__('/orders/') or request.url.__contains__('/subscriptions/')):
+                    # print(request.method + ' ' + request.url)
+                    try:
+                        data = json.loads(request.response.body)
+                        # print('parsed as json')
+                        if '_id' in data:
+                            order_id = data['_id']
+                    except UnicodeDecodeError:
+                        try:
+                            data = json.loads(decompress(request.response.body))
+                            # print('decompressed and parsed as json')
+                            if '_id' in data:
+                                order_id = data['_id']
+                        except json.decoder.JSONDecodeError:
+                            data = request.response.body
+                            # print('decompressed and parsed as string')
+                    # print(data)
+        print(order_id)
+        scriptData.cell(2, 13).value = order_id
+        datafile.save(FilePath)
 
     def EditOrder(self):
-        self.driver.find_element_by_link_text('Orders').click()
-        self.driver.find_element_by_xpath('//*[@class="table"]//*[a]').click()
+        self.driver.get(loginData.cell(3, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_link_text('Edit Contents').click()
         self.driver.find_element_by_xpath('//*[@class="sc-hXRMBi eQtMFe"]').click()
         self.driver.find_element_by_xpath(PracticeLocators.searchForMedication).click()
         time.sleep(3)
         self.driver.find_element_by_xpath("//*[text()='150 Rx']").click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element_by_xpath(PracticeLocators.skipPayment).click()
         self.driver.find_element_by_xpath(PracticeLocators.updateOrderButton).click()
         time.sleep(7)
@@ -1018,12 +1265,10 @@ class CommanFlow:
             print("\nOrder not created")
         self.driver.find_element_by_class_name('account-link-label').click()
         self.driver.find_element_by_link_text('Sign Out').click()
-        self.driver.close()
 
     def EditPatientDetails(self):
-        self.driver.find_element_by_css_selector(DispenserLocators.patientSearch).send_keys(testData.cell(2, 1).value)
-        time.sleep(3)
-        self.driver.find_element_by_css_selector(DispenserLocators.firstOrder).click()
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_xpath(DispenserLocators.editButton).click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
@@ -1050,12 +1295,10 @@ class CommanFlow:
         assert "Order has been successfully updated."
         button = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
         self.driver.execute_script("arguments[0].click()", button)
-        self.driver.quit()
 
     def CompleteOrder(self):
-        self.driver.find_element_by_css_selector(DispenserLocators.patientSearch).send_keys(testData.cell(2, 1).value)
-        time.sleep(3)
-        self.driver.find_element_by_css_selector(DispenserLocators.firstOrder).click()
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_xpath(DispenserLocators.selectActionDropdown).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(DispenserLocators.completeValue).click()
@@ -1065,12 +1308,10 @@ class CommanFlow:
         assert "You have successfully completed this order"
         button = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
         self.driver.execute_script("arguments[0].click()", button)
-        self.driver.quit()
 
     def CancelOrder(self):
-        self.driver.find_element_by_css_selector(DispenserLocators.patientSearch).send_keys(testData.cell(2, 1).value)
-        time.sleep(3)
-        self.driver.find_element_by_css_selector(DispenserLocators.firstOrder).click()
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_xpath(DispenserLocators.selectActionDropdown).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(DispenserLocators.cancelValue).click()
@@ -1080,12 +1321,10 @@ class CommanFlow:
         assert "You have successfully canceled this order"
         button = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
         self.driver.execute_script("arguments[0].click()", button)
-        self.driver.quit()
 
     def SendOutOfNetwork(self):
-        self.driver.find_element_by_css_selector(DispenserLocators.patientSearch).send_keys(testData.cell(2, 1).value)
-        time.sleep(3)
-        self.driver.find_element_by_css_selector(DispenserLocators.firstOrder).click()
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_xpath(DispenserLocators.selectActionDropdown).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(DispenserLocators.sendOutOfNetwork).click()
@@ -1095,11 +1334,11 @@ class CommanFlow:
         assert "You have successfully sent this order out of network"
         button = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
         self.driver.execute_script("arguments[0].click()", button)
-        self.driver.quit()
 
     def ApproveOrderFromPractice(self):
         assert self.driver.find_element_by_xpath(DispenserLocators.verifyOrderDate)
-        assert self.driver.find_element_by_xpath("(//tr[@class='table-row'])[1]//td[3][text()='" + testData.cell(2, 1).value + "']")
+        assert self.driver.find_element_by_xpath(
+            "(//tr[@class='table-row'])[1]//td[3][text()='" + testData.cell(2, 1).value + "']")
         self.driver.find_element_by_xpath(DispenserLocators.approveButton).click()
         time.sleep(2)
         assert "Please confirm that you approve the selected prescriptions."
@@ -1108,17 +1347,15 @@ class CommanFlow:
         time.sleep(1)
         assert "You have successfully approved the selected prescriptions!"
         self.driver.find_element_by_xpath(PracticeLocators.closeButton).click()
-        self.driver.close()
 
     def PatientApprovalAndTransfer(self):
-        self.driver.find_element_by_css_selector(DispenserLocators.patientSearch).send_keys(testData.cell(2, 1).value)
-        time.sleep(3)
-        self.driver.find_element_by_css_selector(DispenserLocators.firstOrder).click()
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_xpath(DispenserLocators.confirmApprovalButton).click()
         time.sleep(1)
         assert "Patient payment approval has been sucessfully captured."
-        dissmissButton = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
-        self.driver.execute_script("arguments[0].click()", dissmissButton)
+        dismissButton = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
+        self.driver.execute_script("arguments[0].click()", dismissButton)
         self.driver.find_element_by_xpath(DispenserLocators.transferOrderButton).click()
         time.sleep(1)
         assert "Have you attached the proper document(s) for this order?"
@@ -1128,13 +1365,49 @@ class CommanFlow:
         time.sleep(2)
         Button = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
         self.driver.execute_script("arguments[0].click()", Button)
-        self.driver.quit()
 
-    def ProcessPayment(self):
-        self.driver.find_element_by_css_selector(DispenserLocators.patientSearch).send_keys(testData.cell(2, 1).value)
-        time.sleep(3)
-        self.driver.find_element_by_css_selector(DispenserLocators.firstOrder).click()
-        self.driver.implicitly_wait(10)
+    def ProcessPaymentAndCreateLable(self):
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
         self.driver.find_element_by_xpath(DispenserLocators.processPaymentButton).click()
         time.sleep(3)
         assert "Congratulations, payment has been successfully processed!"
+        self.driver.find_element_by_xpath(DispenserLocators.createPostageLabelButton).click()
+        self.driver.implicitly_wait(10)
+        assert "(Payment processed once label is created)"
+        self.driver.find_element_by_xpath(DispenserLocators.createLabelButton).click()
+        time.sleep(3)
+        assert "Congratulations, you have successfully created a postage label."
+        self.driver.find_element_by_xpath(DispenserLocators.printLabelButton).click()
+        time.sleep(1)
+
+    def ProcessPaymentAndConfirmPickUpPerson(self):
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath(DispenserLocators.processPaymentButton).click()
+        time.sleep(3)
+        assert "Congratulations, payment has been successfully processed!"
+        self.driver.find_element_by_class_name(MasterLocators.closeButton).click()
+        self.driver.find_element_by_xpath(DispenserLocators.confirmPickUpButton).click()
+        time.sleep(2)
+        assert "You have successfully completed this order"
+        dismissButton = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
+        self.driver.execute_script("arguments[0].click()", dismissButton)
+
+    def ProcessPaymentAndConfirmCourierPickUp(self):
+        self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath(DispenserLocators.processPaymentButton).click()
+        time.sleep(3)
+        assert "Congratulations, payment has been successfully processed!"
+        self.driver.find_element_by_class_name(MasterLocators.closeButton).click()
+        self.driver.find_element_by_xpath(DispenserLocators.confirmCourierPickUp).click()
+        time.sleep(1)
+        assert "Order successfully updated."
+        dismissButton = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
+        self.driver.execute_script("arguments[0].click()", dismissButton)
+        self.driver.find_element_by_xpath(DispenserLocators.completeButton).click()
+        time.sleep(1)
+        assert "You have successfully completed this order"
+        btn = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
+        self.driver.execute_script("arguments[0].click()", btn)

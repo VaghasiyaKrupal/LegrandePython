@@ -58,7 +58,7 @@ class MasterLocators:
     addPracticeLink = "Add New Practice"
     dropdownSelectType = '//div[text()="Select..."]'
     practiceValue = '(//*[text()="Practice"])[4]'
-    RXDispenser = "//div[@aria-label='"+scriptData.cell(2, 5).value+"']"
+    RXDispenser = "//div[@aria-label='" + scriptData.cell(2, 5).value + "']"
     OTCDispenser = "//div[@aria-label='" + scriptData.cell(2, 6).value + "']"
     CompoundDispenser = "//div[@aria-label='" + scriptData.cell(2, 7).value + "']"
 
@@ -66,7 +66,7 @@ class MasterLocators:
     userScreen = 'Users'
     practiceRadio = '//label[contains(text(),"Practice")]'
     searchPractice = '//*[@placeholder="Search for an account"]'
-    selectUserPractice = "(//*[text()='"+scriptData.cell(2, 8).value+" Practice'])[1]"
+    selectUserPractice = "(//*[text()='" + scriptData.cell(2, 8).value + " Practice'])[1]"
     userType = "//*[text()='Clerk']"
 
     # Payor Creation

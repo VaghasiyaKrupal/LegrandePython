@@ -53,7 +53,8 @@ class TestPatient:
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath(Locators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, Locators.completeAccount))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
@@ -89,7 +90,7 @@ class TestPatient:
         self.driver = setup
         time.sleep(3)
         if "Password Email Sent." and "Please check your email for a link to reset your password." in self.driver.page_source:
-            print('\nPassword Reset Email Sent to this email address: '+loginData.cell(8, 3).value)
+            print('\nPassword Reset Email Sent to this email address: ' + loginData.cell(8, 3).value)
         else:
             print("\nOpps, Something went wrong")
         self.driver.quit()
@@ -150,7 +151,7 @@ class TestSetting:
     def test_AccountInfo(self, setup, PatientLogin):
         self.driver = setup
         url = self.driver.current_url
-        newURl = url+"/settings"
+        newURl = url + "/settings"
         self.driver.get(newURl)
         time.sleep(2)
         assert 'Account' and 'Password' and 'Health Insurance' and 'Allergies' and 'Preference' in self.driver.page_source
@@ -159,15 +160,15 @@ class TestSetting:
         assert 'Contact Details' and 'Payment Method' and 'Shipping Address' in self.driver.page_source
         self.driver.find_element_by_xpath('(//*[text()="Update"])[1]').click()
         fName = self.driver.find_element_by_name(PracticeLocators.firstName)
-        fName.send_keys(Keys.CONTROL+"a")
+        fName.send_keys(Keys.CONTROL + "a")
         fName.send_keys(Keys.DELETE)
         fName.send_keys(FirstName)
         lName = self.driver.find_element_by_name(PracticeLocators.lastName)
-        lName.send_keys(Keys.CONTROL+"a")
+        lName.send_keys(Keys.CONTROL + "a")
         lName.send_keys(Keys.DELETE)
         lName.send_keys(LastName)
         phone = self.driver.find_element_by_name(PracticeLocators.phoneNumber)
-        phone.send_keys(Keys.CONTROL+"a")
+        phone.send_keys(Keys.CONTROL + "a")
         phone.send_keys(Keys.DELETE)
         phone.send_keys(PhoneNumber)
         self.driver.find_element_by_xpath(PatientLocators.saveUpdateButton).click()
@@ -191,16 +192,23 @@ class TestSetting:
         assert 'Contact Details' and 'Payment Method' and 'Shipping Address' in self.driver.page_source
         self.driver.find_element_by_xpath(PatientLocators.updatePaymentButton).click()
         card = self.driver.find_element_by_id(PracticeLocators.cardName)
-        card.send_keys(Keys.CONTROL+'a')
+        card.send_keys(Keys.CONTROL + 'a')
         card.send_keys(Keys.DELETE)
         card.send_keys("Master Card")
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[contains(@src,'hpc.uat.freedompay.com')]")))
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLogin.CardNumber))).send_keys(PatientLocators.cardDetails)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.ExperientionDate))).send_keys(PatientLocators.cardExpiryDate)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.cvvCode))).send_keys(PatientLocators.cardCvvCode)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.PostalCode))).send_keys(PatientLocators.cardPostalCode)
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[contains(@src,'hpc.uat.freedompay.com')]")))
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLogin.CardNumber))).send_keys(
+            PatientLocators.cardDetails)
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.ID, PatientLocators.ExperientionDate))).send_keys(
+            PatientLocators.cardExpiryDate)
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.cvvCode))).send_keys(
+            PatientLocators.cardCvvCode)
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.PostalCode))).send_keys(
+            PatientLocators.cardPostalCode)
         time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, PatientLocators.iframeSaveButton))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, PatientLocators.iframeSaveButton))).click()
         # time.sleep(5)
         self.driver.switch_to.default_content()
         self.driver.find_element_by_xpath('//section[@role="dialog"]//*[text()="Continue"]').click()
@@ -220,7 +228,7 @@ class TestSetting:
         self.driver.find_element_by_xpath(PatientLocators.updateShippingButton).click()
 
         address1 = self.driver.find_element_by_name(PracticeLocators.addressLine1)
-        address1.send_keys(Keys.CONTROL+'a')
+        address1.send_keys(Keys.CONTROL + 'a')
         address1.send_keys(Keys.DELETE)
         address1.send_keys(street_1)
 
@@ -234,7 +242,7 @@ class TestSetting:
         self.driver.find_element_by_xpath(PatientLocators.stateValue).click()
 
         zip = self.driver.find_element_by_name(PracticeLocators.addressZipCode)
-        zip.send_keys(Keys.CONTROL+'a')
+        zip.send_keys(Keys.CONTROL + 'a')
         zip.send_keys(Keys.DELETE)
         zip.send_keys(zipCode)
         time.sleep(1)
@@ -294,7 +302,7 @@ class TestSetting:
             self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
         self.driver.quit()
 
-    def test_RemoveInsurance(self, setup,PatientLogin):
+    def test_RemoveInsurance(self, setup, PatientLogin):
         self.driver = setup
         url = self.driver.current_url
         newURl = url + "/settings"
@@ -341,7 +349,7 @@ class TestSetting:
         self.driver.find_element_by_xpath(PatientLocators.confirmButton).click()
         self.driver.quit()
 
-    def testCheckPreference(self, setup,PatientLogin):
+    def testCheckPreference(self, setup, PatientLogin):
         self.driver = setup
         url = self.driver.current_url
         newURl = url + "/settings"
@@ -374,17 +382,18 @@ class TestEnterDetailsFromNotification:
             EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[contains(@src,'hpc.uat.freedompay.com')]")))
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.CardNumber))).send_keys(
             PatientLocators.cardDetails)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.ExperientionDate))).send_keys(
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.ID, PatientLocators.ExperientionDate))).send_keys(
             PatientLocators.cardExpiryDate)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.cvvCode))).send_keys(
             PatientLocators.cardCvvCode)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, PatientLocators.PostalCode))).send_keys(
             PatientLocators.cardPostalCode)
         time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, PatientLocators.iframeSaveButton))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, PatientLocators.iframeSaveButton))).click()
         # time.sleep(5)
         self.driver.switch_to.default_content()
         time.sleep(4)
         assert "Thank You!" in self.driver.page_source
         self.driver.quit()
-

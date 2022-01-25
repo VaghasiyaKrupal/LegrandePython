@@ -2,7 +2,7 @@ import time
 import pytest
 from faker import Faker
 from datetime import date
-from selenium import webdriver
+from seleniumwire import webdriver
 from openpyxl import load_workbook
 from Locators.Locators import Locators
 from selenium.webdriver.common.by import By
@@ -10,6 +10,7 @@ from pageObjects.BaseFile import CommanFlow
 from pageObjects.LoginPage import LoginScreen
 from Locators.PracticeLocators import PracticeLocators
 from webdriver_manager.chrome import ChromeDriverManager
+
 
 faker = Faker()
 today = date.today()
@@ -386,7 +387,21 @@ def PatientApprovalAndTransferOrder(setup):
 
 
 @pytest.fixture()
-def ProcessPayment(setup):
+def ProcessPaymentAndCreateLabel(setup):
     driver = setup
     editOrder = CommanFlow(driver)
-    editOrder.ProcessPayment()
+    editOrder.ProcessPaymentAndCreateLable()
+
+
+@pytest.fixture()
+def ProcessPaymentAndConfirmPickUpPerson(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.ProcessPaymentAndConfirmPickUpPerson()
+
+
+@pytest.fixture()
+def ProcessPaymentAndCourierPickUp(setup):
+    driver = setup
+    editOrder = CommanFlow(driver)
+    editOrder.ProcessPaymentAndConfirmCourierPickUp()

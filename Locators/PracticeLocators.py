@@ -7,7 +7,6 @@ scriptData = datafile['Script Data']
 
 
 class PracticeLocators:
-    # Practice portal locators
     addPersonButton = "person_add"
     firstName = "first_name"
     lastName = "last_name"

@@ -73,11 +73,12 @@ class TestProductCreation:
         self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
         self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
         time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys('C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
+        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
+            'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
         time.sleep(5)
         self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
         time.sleep(2)
-        assert "You have successfully added "+scriptData.cell(2, 1).value + "."
+        assert "You have successfully added " + scriptData.cell(2, 1).value + "."
         self.driver.quit()
 
     def test_CreateOTCProduct(self, setup, MasterLogin):
@@ -101,11 +102,12 @@ class TestProductCreation:
         self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
         self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
         time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys('C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
+        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
+            'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
         time.sleep(5)
         self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
         time.sleep(2)
-        assert "You have successfully added "+scriptData.cell(2, 2).value + "."
+        assert "You have successfully added " + scriptData.cell(2, 2).value + "."
         self.driver.quit()
 
     def test_CreateCompoundProduct(self, setup, MasterLogin):
@@ -129,11 +131,12 @@ class TestProductCreation:
         self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
         self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
         time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys('C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
+        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
+            'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
         time.sleep(5)
         self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
         time.sleep(2)
-        assert "You have successfully added "+scriptData.cell(2, 3).value + "."
+        assert "You have successfully added " + scriptData.cell(2, 3).value + "."
         self.driver.quit()
 
 
@@ -200,7 +203,7 @@ class TestDispenserCreation:
         self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " RX")
         scriptData.cell(2, 5).value = "Selenium " + firstName + " RX"
-        loginData.cell(5, 3).value = rxDispenserEmail+emailAddress
+        loginData.cell(5, 3).value = rxDispenserEmail + emailAddress
         datafile.save(FilePath)
         self.driver.find_element_by_name(MasterLocators.emailField).send_keys(loginData.cell(5, 3).value)
         self.driver.find_element_by_name(MasterLocators.phoneField).send_keys(PhoneNumber)
@@ -235,8 +238,10 @@ class TestDispenserCreation:
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
@@ -290,8 +295,10 @@ class TestDispenserCreation:
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
@@ -345,8 +352,10 @@ class TestDispenserCreation:
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
@@ -416,8 +425,10 @@ class TestPracticeCreation:
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
@@ -465,8 +476,10 @@ class TestUserCreation:
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath(MasterLocators.emailInbox).click()
         time.sleep(3)
-        WebDriverWait(self.driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.XPATH, Locators.emailIframe)))
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, MasterLocators.accountSetupLink))).click()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_name(MasterLocators.newPassword).send_keys(loginData.cell(3, 4).value)
