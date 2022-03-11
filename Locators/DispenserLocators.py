@@ -23,14 +23,16 @@ class DispenserLocators:
     completeValue = '//*[@aria-label="Complete"]'
     sendOutOfNetwork = '//*[@aria-label="Send out of Network"]'
     cancelValue = '//*[@aria-label="Cancel"]'
-    selectActionDropdown = '//div[@class="sc-eTpRJs ihfShO"]//*[@class="Select-arrow"]'
+    selectActionDropdown = '//div[@direction="column"]//*[@class="Select-arrow"]'
     saveAndExitButton = '//button[text()="Save and Exit"]'
-    selectServiceType = '//*[@class="sc-chbbiW eBhBQG"]//span[@class="Select-arrow"]'
+    selectServiceType = '//*[@class="Select-control"]//span[@class="Select-arrow"]'
     pickUpPerson = '[aria-label="Pick Up In Person"]'
     courierService = '[aria-label="Courier Service"]'
     confirmCourierPickUp = '//button[text()="Confirm Courier Pick-Up"]'
     completeButton = '//button[text()="Complete"]'
     editPaymentButton = '//div[@id="card"]//*[text()="Edit"]'
+    orderNoteTextbox = '//h1[text()="Order Notes"]/parent::div/parent::div/parent::div//textarea'
+    pharmacyCheckbox = "//label[contains(text(),'Pharmacy')]"
 
     # STD Pharma Locators
     approveButton = '//*[text()="Approve"]'

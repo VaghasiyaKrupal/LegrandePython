@@ -39,10 +39,10 @@ class PracticeLocators:
     ProductQuantity = "//*[@data-test='amount']//*[@class='Select-arrow']"
     Quantity = '//*[@class="Select-menu-outer"]//div[@aria-label="2"]'
     ProductRefilles = '//*[@data-test="refills"]//*[@class="Select-arrow"]'
-    DAWCheckbox = '//*[@class="sc-eMigcr cVTyKh"]'
+    DAWCheckbox = '//*[@class="sc-fzsDOv fUXBxr"]'
     productInstruction = '//*[@placeholder="Enter Rx Instructions"]'
     allergiesButton = '(//*[text()="Edit"])[3]'
-    allergiesTextbox = '//*[@class="modal-dialog"]//input[@class="sc-kLIISr eXqdIs"]'
+    allergiesTextbox = '//*[@class="modal-dialog"]//input'
     doneButton = "//*[text()='Done']"
     addDropchartButton = "//*[@data-test='edit-document']"
     selectDocuments = '(//*[@class="modal-dialog"]//*[@type="checkbox"])[1]'

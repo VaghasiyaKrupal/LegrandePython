@@ -54,7 +54,7 @@ class TestForgotPassword:
 class TestProductCreation:
     def test_CreateRXProduct(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.addProductLink).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
         assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys(rxProductName)
         scriptData.cell(2, 1).value = rxProductName
@@ -83,7 +83,7 @@ class TestProductCreation:
 
     def test_CreateOTCProduct(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.addProductLink).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
         assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys(otcProductName)
         scriptData.cell(2, 2).value = otcProductName
@@ -112,7 +112,7 @@ class TestProductCreation:
 
     def test_CreateCompoundProduct(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.addProductLink).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
         assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys(compoundProductName)
         scriptData.cell(2, 3).value = compoundProductName
@@ -140,10 +140,10 @@ class TestProductCreation:
         self.driver.quit()
 
 
-class TestDispenserCreation:
+# class TestDispenserCreation:
     # def test_CreateHubDispenser(self, setup, MasterLogin):
     #     self.driver = setup
-    #     self.driver.find_element_by_link_text(MasterLocators.dispenserScreen).click()
+    #     WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
     #     self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
     #     self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Hub")
     #     scriptData.cell(2, 4).value = "Selenium " + firstName + " Hub"
@@ -199,7 +199,7 @@ class TestDispenserCreation:
 
     def test_CreateRXDispenser(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.dispenserScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
         self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " RX")
         scriptData.cell(2, 5).value = "Selenium " + firstName + " RX"
@@ -256,7 +256,7 @@ class TestDispenserCreation:
 
     def test_CreateOTCDispenser(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.dispenserScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
         self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " OTC")
         scriptData.cell(2, 6).value = "Selenium " + firstName + " OTC"
@@ -313,7 +313,7 @@ class TestDispenserCreation:
 
     def test_CreateCompoundDispenser(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.dispenserScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
         self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Compound")
         scriptData.cell(2, 7).value = "Selenium " + firstName + " Compound"
@@ -372,7 +372,7 @@ class TestDispenserCreation:
 class TestPracticeCreation:
     def test_CreatePracticeAccount(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.practiceScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.practiceScreen))).click()
         self.driver.find_element_by_link_text(MasterLocators.addPracticeLink).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Practice")
         scriptData.cell(2, 8).value = "Selenium " + firstName
@@ -445,7 +445,7 @@ class TestPracticeCreation:
 class TestUserCreation:
     def test_CreateUserForPractice(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.userScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.userScreen))).click()
         self.driver.find_element_by_xpath(PracticeLocators.addUserButton).click()
         self.driver.find_element_by_name(PracticeLocators.firstName).send_keys(firstName)
         self.driver.find_element_by_name(PracticeLocators.lastName).send_keys(lastName)
@@ -496,7 +496,7 @@ class TestUserCreation:
 class TestPayorCreation:
     def test_CreateInsurancePayor(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.PayorScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.PayorScreen))).click()
         self.driver.find_element_by_xpath(MasterLocators.addPayorButton).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Insurance")
         scriptData.cell(2, 10).value = "Selenium " + firstName + " Insurance"
@@ -516,7 +516,7 @@ class TestPayorCreation:
 
     def test_CreateCashPayor(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.PayorScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.PayorScreen))).click()
         self.driver.find_element_by_xpath(MasterLocators.addPayorButton).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Cash")
         scriptData.cell(2, 11).value = "Selenium " + firstName + " Cash"
@@ -536,7 +536,7 @@ class TestPayorCreation:
 
     def test_CreateCouponPayor(self, setup, MasterLogin):
         self.driver = setup
-        self.driver.find_element_by_link_text(MasterLocators.PayorScreen).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.PayorScreen))).click()
         self.driver.find_element_by_xpath(MasterLocators.addPayorButton).click()
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Coupon")
         scriptData.cell(2, 12).value = "Selenium " + firstName + " Coupon"

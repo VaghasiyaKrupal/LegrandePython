@@ -12,7 +12,8 @@ from Locators.MasterLocators import MasterLocators
 from Locators.PatientLocators import PatientLocators
 from Locators.PracticeLocators import PracticeLocators
 from Locators.DispenserLocators import DispenserLocators
-
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
@@ -34,7 +35,7 @@ class CommanFlow:
         self.driver = driver
 
     def CreatePatient(self):
-        self.driver.find_element_by_class_name(PracticeLocators.addPersonButton).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, PracticeLocators.addPersonButton))).click()
         self.driver.find_element_by_name(PracticeLocators.firstName).send_keys(FirstName)
         self.driver.find_element_by_name(PracticeLocators.lastName).send_keys(LastName)
         self.driver.find_element_by_name(PracticeLocators.birthDate).send_keys(currentDate)
@@ -58,6 +59,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.addUserButton).click()
         self.driver.find_element_by_name(PracticeLocators.firstName).send_keys(FirstName)
         self.driver.find_element_by_name(PracticeLocators.lastName).send_keys(LastName)
+        time.sleep(1)
         self.driver.find_element_by_name(Locators.Email).send_keys(EmailAddress.lower())
         self.driver.find_element_by_name(PracticeLocators.phoneNumber).send_keys(PhoneNumber)
         self.driver.find_element_by_class_name(PracticeLocators.selectAccountType).click()
@@ -65,7 +67,7 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.clerkOption).click()
         time.sleep(1)
         self.driver.find_element_by_xpath(PracticeLocators.createAccountButton).click()
-        time.sleep(3)
+        time.sleep(4)
         if "Congratulations. You have successfully created new user profile." in self.driver.page_source:
             self.driver.find_element_by_xpath(PracticeLocators.dismissButton).click()
             print("\nUser created successfully")
@@ -73,7 +75,7 @@ class CommanFlow:
             print("\nUser not created")
 
     def PatientMainSearch(self):
-        self.driver.find_element_by_class_name(PracticeLocators.mainPatientSearch).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, PracticeLocators.mainPatientSearch))).click()
         self.driver.find_element_by_xpath(PracticeLocators.mainSearchTextbox).send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_class_name(PracticeLocators.mainSearchButton).click()
         try:
@@ -92,24 +94,30 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.tableRow).click()
         self.driver.find_element_by_xpath(DispenserLocators.updateButton).click()
         self.driver.find_element_by_xpath(DispenserLocators.changePriceButton).click()
-        if "You have successfully updated the price of 100 Compound" in self.driver.page_source:
+        time.sleep(3)
+        if "You have successfully updated the price" in self.driver.page_source:
             self.driver.find_element_by_xpath(PracticeLocators.closeButton).click()
             print('\nProduct price changed successfully')
         else:
             print('\nProduct price not changed')
 
     def OnetimeRXSkipPayment(self):
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 1).value)
@@ -145,9 +153,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -179,16 +187,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def OnetimeOTCSkipPayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 2).value)
@@ -224,9 +238,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -258,16 +272,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def OnetimeCompoundSkipPayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 3).value)
@@ -303,9 +323,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -337,16 +357,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def SubscriptionRXSkipPayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
@@ -378,6 +404,7 @@ class CommanFlow:
         self.driver.execute_script("arguments[0].click()", element)
         self.driver.find_element_by_xpath(PracticeLocators.selectButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.skipPayment).click()
+        time.sleep(1)
         self.driver.find_element_by_xpath(DispenserLocators.selectServiceType).click()
         time.sleep(1)
         self.driver.find_element_by_css_selector(DispenserLocators.pickUpPerson).click()
@@ -387,9 +414,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -421,16 +448,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def SubscriptionOTCSkipPayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
@@ -468,9 +501,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -502,16 +535,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def SubscriptionCompoundSkipPayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
         self.driver.execute_script('arguments[0].click()', el)
@@ -553,9 +592,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -587,16 +626,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def OnetimeRXProvidePayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 1).value)
@@ -664,9 +709,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -698,16 +743,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def OnetimeOTCProvidePayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 2).value)
@@ -771,9 +822,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -805,16 +856,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def OnetimeCompoundProvidePayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.CreateOnetimeRXButton).click()
         self.driver.find_element_by_name(PracticeLocators.OnetimeSearchMedicine).send_keys(scriptData.cell(2, 3).value)
@@ -878,9 +935,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -912,16 +969,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def SubscriptionRXProvidePayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         time.sleep(2)
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
@@ -988,9 +1051,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -1022,16 +1085,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def SubscriptionOTCProvidePayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         time.sleep(2)
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
@@ -1098,9 +1167,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -1132,16 +1201,22 @@ class CommanFlow:
         datafile.save(FilePath)
 
     def SubscriptionCompoundProvidePayment(self):
-        self.driver.find_element_by_class_name(PracticeLocators.Add_RX).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.Add_RX))).click()
         PatientSearch = self.driver.find_element_by_xpath(PracticeLocators.Patient_search_textbox)
         PatientSearch.click()
+        time.sleep(1)
         PatientSearch.send_keys(testData.cell(2, 1).value)
         self.driver.find_element_by_xpath("(//*[text()='" + testData.cell(2, 2).value + "'])[1]").click()
         DoctorSearch = self.driver.find_element_by_xpath(PracticeLocators.doctor_search_textbox)
         DoctorSearch.click()
+        time.sleep(1)
         DoctorSearch.send_keys(scriptData.cell(2, 8).value)
-        self.driver.find_element_by_xpath(
-            "(//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice'])[2]").click()
+        selectPractice = self.driver.find_elements(By.XPATH, "(//*[text()='" + scriptData.cell(2,8).value + " " + "Practice'])[2]")
+        if selectPractice:
+            selectPractice[0].click()
+        else:
+            self.driver.find_element_by_xpath(
+                "//*[text()='" + scriptData.cell(2, 8).value + " " + "Practice']").click()
         self.driver.find_element_by_xpath(PracticeLocators.NextButton).click()
         time.sleep(2)
         el = self.driver.find_element_by_xpath(PracticeLocators.createSubscriptionRxButton)
@@ -1211,9 +1286,9 @@ class CommanFlow:
             Notes[0].send_keys(testData.cell(2, 5).value)
         else:
             self.driver.find_element_by_xpath(DispenserLocators.addNoteButton).click()
-            self.driver.find_element_by_xpath('//textarea[@class="sc-hIVACf cpAwkS"]').send_keys(
+            self.driver.find_element_by_xpath(DispenserLocators.orderNoteTextbox).send_keys(
                 testData.cell(2, 5).value)
-            pharmaCheckbox = self.driver.find_elements(By.XPATH, "//label[contains(text(),'Pharmacy')]")
+            pharmaCheckbox = self.driver.find_elements(By.XPATH, DispenserLocators.pharmacyCheckbox)
             if pharmaCheckbox:
                 pharmaCheckbox[0].click()
             self.driver.find_element_by_xpath(PatientLocators.iframeSaveButton).click()
@@ -1247,14 +1322,13 @@ class CommanFlow:
 
     def EditOrder(self):
         self.driver.get(loginData.cell(3, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_link_text('Edit Contents').click()
-        self.driver.find_element_by_xpath('//*[@class="sc-hXRMBi eQtMFe"]').click()
-        self.driver.find_element_by_xpath(PracticeLocators.searchForMedication).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Edit Contents'))).click()
+        self.driver.find_element_by_xpath(PracticeLocators.searchForMedication).send_keys('Compound')
         time.sleep(3)
-        self.driver.find_element_by_xpath("//*[text()='150 Rx']").click()
+        self.driver.find_element_by_xpath('//div[@data-test="_HINTS"]/div[2]').click()
         self.driver.find_element_by_xpath(PracticeLocators.AddButton).click()
         time.sleep(2)
+        self.driver.find_element_by_xpath('//*[@class="sc-epnACN hXOwfY"]').click()
         self.driver.find_element_by_xpath(PracticeLocators.skipPayment).click()
         self.driver.find_element_by_xpath(PracticeLocators.updateOrderButton).click()
         time.sleep(7)
@@ -1267,18 +1341,13 @@ class CommanFlow:
 
     def EditPatientDetails(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.editButton).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.editButton))).click()
         cardName = self.driver.find_element_by_name(PracticeLocators.cardName)
         cardName.clear()
-        cardName.send_keys(testData.cell(2, 8).value)
-        act = ActionChains(self.driver)
-        act.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-        act.key_down(Keys.CONTROL).send_keys("c").key_up(Keys.CONTROL).perform()
-        act.send_keys(Keys.TAB).perform()
-        act.key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-        cardName.clear()
         cardName.send_keys(testData.cell(2, 7).value)
+        cardNumber = self.driver.find_element_by_name(PracticeLocators.maskCardNumberField)
+        cardNumber.clear()
+        cardNumber.send_keys(testData.cell(2, 8).value)
         cardCVV = self.driver.find_element_by_name(PracticeLocators.cardCVV)
         cardCVV.clear()
         cardCVV.send_keys(testData.cell(2, 9).value)
@@ -1292,13 +1361,12 @@ class CommanFlow:
         self.driver.find_element_by_xpath(DispenserLocators.saveAndExitButton).click()
         self.driver.implicitly_wait(10)
         assert "Order has been successfully updated."
-        button = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
+        button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, PracticeLocators.dismissButton)))
         self.driver.execute_script("arguments[0].click()", button)
 
     def CompleteOrder(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.selectActionDropdown).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.selectActionDropdown))).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(DispenserLocators.completeValue).click()
         self.driver.find_element_by_class_name('form-control').send_keys('Patient completed the treatment.')
@@ -1310,8 +1378,7 @@ class CommanFlow:
 
     def CancelOrder(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.selectActionDropdown).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.selectActionDropdown))).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(DispenserLocators.cancelValue).click()
         self.driver.find_element_by_class_name('form-control').send_keys('I do not need this order.')
@@ -1323,8 +1390,7 @@ class CommanFlow:
 
     def SendOutOfNetwork(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.selectActionDropdown).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.selectActionDropdown))).click()
         time.sleep(2)
         self.driver.find_element_by_xpath(DispenserLocators.sendOutOfNetwork).click()
         self.driver.find_element_by_class_name('form-control').send_keys('Order send out of network.')
@@ -1349,8 +1415,7 @@ class CommanFlow:
 
     def PatientApprovalAndTransfer(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.confirmApprovalButton).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.confirmApprovalButton))).click()
         time.sleep(1)
         assert "Patient payment approval has been sucessfully captured."
         dismissButton = self.driver.find_element_by_xpath(PracticeLocators.dismissButton)
@@ -1367,23 +1432,21 @@ class CommanFlow:
 
     def ProcessPaymentAndCreateLable(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.processPaymentButton).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.processPaymentButton))).click()
         time.sleep(3)
         assert "Congratulations, payment has been successfully processed!"
         self.driver.find_element_by_xpath(DispenserLocators.createPostageLabelButton).click()
         self.driver.implicitly_wait(10)
         assert "(Payment processed once label is created)"
         self.driver.find_element_by_xpath(DispenserLocators.createLabelButton).click()
-        time.sleep(3)
+        time.sleep(4)
         assert "Congratulations, you have successfully created a postage label."
         self.driver.find_element_by_xpath(DispenserLocators.printLabelButton).click()
         time.sleep(1)
 
     def ProcessPaymentAndConfirmPickUpPerson(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.processPaymentButton).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.processPaymentButton))).click()
         time.sleep(3)
         assert "Congratulations, payment has been successfully processed!"
         self.driver.find_element_by_class_name(MasterLocators.closeButton).click()
@@ -1395,8 +1458,7 @@ class CommanFlow:
 
     def ProcessPaymentAndConfirmCourierPickUp(self):
         self.driver.get(loginData.cell(4, 2).value + "/orders/" + scriptData.cell(2, 13).value)
-        self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath(DispenserLocators.processPaymentButton).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, DispenserLocators.processPaymentButton))).click()
         time.sleep(3)
         assert "Congratulations, payment has been successfully processed!"
         self.driver.find_element_by_class_name(MasterLocators.closeButton).click()
