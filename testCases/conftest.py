@@ -20,7 +20,7 @@ LastName = faker.last_name()
 PhoneNumber = faker.phone_number()
 EmailAddress = FirstName + "." + LastName + "@mailinator.com"
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
+FilePath = "TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 testData = datafile['Test Data']
 loginData = datafile["Login Credentials"]

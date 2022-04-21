@@ -12,7 +12,7 @@ from Locators.PracticeLocators import PracticeLocators
 import random
 from faker import Faker
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
+FilePath = "TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 testData = datafile['Test Data']
 loginData = datafile['Login Credentials']

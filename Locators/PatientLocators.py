@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 today = date.today()
 currentDate = today.strftime("%m/%d/%Y")
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
+FilePath = "TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 testData = datafile['Test Data']
 

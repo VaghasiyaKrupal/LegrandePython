@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
+FilePath = "TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 testData = datafile['Test Data']
 scriptData = datafile['Script Data']

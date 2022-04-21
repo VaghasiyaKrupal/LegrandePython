@@ -6,7 +6,7 @@ from Locators.PracticeLocators import PracticeLocators
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-FilePath = "C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Data.xlsx"
+FilePath = "TestData/Data.xlsx"
 datafile = load_workbook(FilePath)
 testData = datafile['Test Data']
 scriptData = datafile['Script Data']
