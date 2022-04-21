@@ -42,4 +42,4 @@ jobs:
 
       - name: Test with pytest
         run: |
-          py.test -v -s testCases/Master.py
+          py.test -v -s testCases/Master.py --browser=chrome --headless -v -s
