@@ -42,4 +42,4 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest
+          py.test -v -s testCases/Master.py
