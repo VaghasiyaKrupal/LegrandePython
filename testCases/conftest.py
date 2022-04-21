@@ -29,6 +29,7 @@ scriptData = datafile['Script Data']
 
 @pytest.fixture()
 def setup():
+    global driver
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.maximize_window()
     return driver
@@ -36,7 +37,6 @@ def setup():
 
 @pytest.fixture()
 def MasterLogin(setup):
-    driver = setup
     driver.get(loginData.cell(2, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -48,7 +48,6 @@ def MasterLogin(setup):
 
 @pytest.fixture()
 def MasterForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(2, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -59,7 +58,6 @@ def MasterForgotPassword(setup):
 
 @pytest.fixture()
 def PracticeLogin(setup):
-    driver = setup
     driver.get(loginData.cell(3, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -74,7 +72,6 @@ def PracticeLogin(setup):
 
 @pytest.fixture()
 def PracticeForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(3, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -85,7 +82,6 @@ def PracticeForgotPassword(setup):
 
 @pytest.fixture()
 def HubLogin(setup):
-    driver = setup
     driver.get(loginData.cell(4, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -100,7 +96,6 @@ def HubLogin(setup):
 
 @pytest.fixture()
 def HubForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(4, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -111,7 +106,6 @@ def HubForgotPassword(setup):
 
 @pytest.fixture()
 def RXPharmaLogin(setup):
-    driver = setup
     driver.get(loginData.cell(5, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -126,7 +120,6 @@ def RXPharmaLogin(setup):
 
 @pytest.fixture()
 def RXPharmaForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(5, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -137,7 +130,6 @@ def RXPharmaForgotPassword(setup):
 
 @pytest.fixture()
 def OTCPharmaLogin(setup):
-    driver = setup
     driver.get(loginData.cell(6, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -152,7 +144,6 @@ def OTCPharmaLogin(setup):
 
 @pytest.fixture()
 def OTCPharmaForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(6, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -163,7 +154,6 @@ def OTCPharmaForgotPassword(setup):
 
 @pytest.fixture()
 def CompoundPharmaLogin(setup):
-    driver = setup
     driver.get(loginData.cell(7, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -178,7 +168,6 @@ def CompoundPharmaLogin(setup):
 
 @pytest.fixture()
 def CompoundPharmaForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(7, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -189,7 +178,6 @@ def CompoundPharmaForgotPassword(setup):
 
 @pytest.fixture()
 def PatientLogin(setup):
-    driver = setup
     driver.get(loginData.cell(8, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -201,7 +189,6 @@ def PatientLogin(setup):
 
 @pytest.fixture()
 def PatientForgotPassword(setup):
-    driver = setup
     driver.get(loginData.cell(8, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -212,7 +199,6 @@ def PatientForgotPassword(setup):
 
 @pytest.fixture()
 def UserLogin(setup):
-    driver = setup
     driver.get(loginData.cell(9, 2).value)
     driver.implicitly_wait(5)
     login = LoginScreen(driver)
@@ -227,181 +213,188 @@ def UserLogin(setup):
 
 @pytest.fixture()
 def CreatePatient(setup):
-    driver = setup
     patient = CommanFlow(driver)
     patient.CreatePatient()
 
 
 @pytest.fixture()
 def CreateUser(setup):
-    driver = setup
     user = CommanFlow(driver)
     user.CreateUser()
 
 
 @pytest.fixture()
 def PatientMainSearch(setup):
-    driver = setup
     mainSearch = CommanFlow(driver)
     mainSearch.PatientMainSearch()
 
 
 @pytest.fixture()
 def ChangeProductPrice(setup):
-    driver = setup
     product = CommanFlow(driver)
     product.ChangeProductPrice()
 
 
 @pytest.fixture()
 def OnetimeRXSkipPayment(setup):
-    driver = setup
     onetimeRxSkipPayment = CommanFlow(driver)
     onetimeRxSkipPayment.OnetimeRXSkipPayment()
 
 
 @pytest.fixture()
 def OnetimeOTCSkipPayment(setup):
-    driver = setup
     onetimeOTCSkipPayment = CommanFlow(driver)
     onetimeOTCSkipPayment.OnetimeOTCSkipPayment()
 
 
 @pytest.fixture()
 def OnetimeCompoundSkipPayment(setup):
-    driver = setup
     onetimeCompoundSkipPayment = CommanFlow(driver)
     onetimeCompoundSkipPayment.OnetimeCompoundSkipPayment()
 
 
 @pytest.fixture()
 def SubscriptionRXSkipPayment(setup):
-    driver = setup
     SubscriptionRXSkipPayment = CommanFlow(driver)
     SubscriptionRXSkipPayment.SubscriptionRXSkipPayment()
 
 
 @pytest.fixture()
 def SubscriptionOTCSkipPayment(setup):
-    driver = setup
     SubscriptionOTCSkipPayment = CommanFlow(driver)
     SubscriptionOTCSkipPayment.SubscriptionOTCSkipPayment()
 
 
 @pytest.fixture()
 def SubscriptionCompoundSkipPayment(setup):
-    driver = setup
     SubscriptionCompoundSkipPayment = CommanFlow(driver)
     SubscriptionCompoundSkipPayment.SubscriptionCompoundSkipPayment()
 
 
 @pytest.fixture()
 def OnetimeRXProvidePayment(setup):
-    driver = setup
     OnetimeRXProvidePayment = CommanFlow(driver)
     OnetimeRXProvidePayment.OnetimeRXProvidePayment()
 
 
 @pytest.fixture()
 def OnetimeOTCProvidePayment(setup):
-    driver = setup
     OnetimeOTCProvidePayment = CommanFlow(driver)
     OnetimeOTCProvidePayment.OnetimeOTCProvidePayment()
 
 
 @pytest.fixture()
 def OnetimeCompoundProvidePayment(setup):
-    driver = setup
     OnetimeCompoundProvidePayment = CommanFlow(driver)
     OnetimeCompoundProvidePayment.OnetimeCompoundProvidePayment()
 
 
 @pytest.fixture()
 def SubscriptionRXProvidePayment(setup):
-    driver = setup
     SubscriptionRXProvidePayment = CommanFlow(driver)
     SubscriptionRXProvidePayment.SubscriptionRXProvidePayment()
 
 
 @pytest.fixture()
 def SubscriptionOTCProvidePayment(setup):
-    driver = setup
     SubscriptionOTCProvidePayment = CommanFlow(driver)
     SubscriptionOTCProvidePayment.SubscriptionOTCProvidePayment()
 
 
 @pytest.fixture()
 def SubscriptionCompoundProvidePayment(setup):
-    driver = setup
     SubscriptionCompoundProvidePayment = CommanFlow(driver)
     SubscriptionCompoundProvidePayment.SubscriptionCompoundProvidePayment()
 
 
 @pytest.fixture()
 def EditOrder(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.EditOrder()
 
 
 @pytest.fixture()
 def EditPatientDetails(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.EditPatientDetails()
 
 
 @pytest.fixture()
 def CompleteOrder(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.CompleteOrder()
 
 
 @pytest.fixture()
 def CancelOrder(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.CancelOrder()
 
 
 @pytest.fixture()
 def SendOutOfNetwork(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.SendOutOfNetwork()
 
 
 @pytest.fixture()
 def ApproveOrderFromPractice(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.ApproveOrderFromPractice()
 
 
 @pytest.fixture()
 def PatientApprovalAndTransferOrder(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.PatientApprovalAndTransfer()
 
 
 @pytest.fixture()
 def ProcessPaymentAndCreateLabel(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.ProcessPaymentAndCreateLable()
 
 
 @pytest.fixture()
 def ProcessPaymentAndConfirmPickUpPerson(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.ProcessPaymentAndConfirmPickUpPerson()
 
 
 @pytest.fixture()
 def ProcessPaymentAndCourierPickUp(setup):
-    driver = setup
     editOrder = CommanFlow(driver)
     editOrder.ProcessPaymentAndConfirmCourierPickUp()
+
+
+@pytest.fixture()
+def VerifyOrderDetailsScreen(setup):
+    orderDetails = CommanFlow(driver)
+    orderDetails.VerifyOrderDetailsScreen()
+
+
+@pytest.mark.hookwrapper
+def pytest_runtest_makereport(item):
+    """
+        Extends the PyTest Plugin to take and embed screenshot in html report, whenever test fails.
+        :param item:
+        """
+    pytest_html = item.config.pluginmanager.getplugin('html')
+    outcome = yield
+    report = outcome.get_result()
+    extra = getattr(report, 'extra', [])
+
+    if report.when == 'call' or report.when == "setup":
+        xfail = hasattr(report, 'wasxfail')
+        if (report.skipped and xfail) or (report.failed and not xfail):
+            file_name = report.nodeid.replace("::", "_") + ".png"
+            _capture_screenshot(file_name)
+            if file_name:
+                html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
+                       'onclick="window.open(this.src)" align="right"/></div>' % file_name
+                extra.append(pytest_html.extras.html(html))
+        report.extra = extra
+
+
+def _capture_screenshot(name):
+    driver.get_screenshot_as_file(name)

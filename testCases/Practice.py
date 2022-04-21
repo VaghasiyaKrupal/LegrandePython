@@ -110,14 +110,8 @@ class TestPractice:
             print("\nOrder: Onetime RX with skip payment, is not created")
         self.driver.quit()
 
-    def test_VerifyOrderDetailsScreen(self, setup, PracticeLogin):
+    def test_VerifyOrderDetailsScreen(self, setup, PracticeLogin, VerifyOrderDetailsScreen):
         self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Orders'))).click()
-        time.sleep(4)
-        self.driver.find_element_by_xpath('//table/tbody/tr[1]/td[2]/a').click()
-        time.sleep(3)
-        assert self.driver.current_url.__contains__(scriptData.cell(2, 13).value)
-        assert 'Prescription & Order Details'
         self.driver.quit()
 
     def test_OnetimeOTCSkipPayment(self, setup, PracticeLogin, OnetimeOTCSkipPayment):

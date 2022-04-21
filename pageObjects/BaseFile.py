@@ -5,9 +5,7 @@ from datetime import date
 from gzip import decompress
 from openpyxl import load_workbook
 from Locators.Locators import Locators
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from Locators.MasterLocators import MasterLocators
 from Locators.PatientLocators import PatientLocators
 from Locators.PracticeLocators import PracticeLocators
@@ -59,7 +57,6 @@ class CommanFlow:
         self.driver.find_element_by_xpath(PracticeLocators.addUserButton).click()
         self.driver.find_element_by_name(PracticeLocators.firstName).send_keys(FirstName)
         self.driver.find_element_by_name(PracticeLocators.lastName).send_keys(LastName)
-        time.sleep(1)
         self.driver.find_element_by_name(Locators.Email).send_keys(EmailAddress.lower())
         self.driver.find_element_by_name(PracticeLocators.phoneNumber).send_keys(PhoneNumber)
         self.driver.find_element_by_class_name(PracticeLocators.selectAccountType).click()
@@ -1319,6 +1316,15 @@ class CommanFlow:
         print(order_id)
         scriptData.cell(2, 13).value = order_id
         datafile.save(FilePath)
+
+    def VerifyOrderDetailsScreen(self):
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Orders'))).click()
+        time.sleep(4)
+        self.driver.find_element_by_xpath('//table/tbody/tr[1]/td[2]/a').click()
+        time.sleep(3)
+        assert 'Prescription & Order Details'
+        time.sleep(1)
+        assert self.driver.current_url.__contains__(scriptData.cell(2, 13).value)
 
     def EditOrder(self):
         self.driver.get(loginData.cell(3, 2).value + "/orders/" + scriptData.cell(2, 13).value)
