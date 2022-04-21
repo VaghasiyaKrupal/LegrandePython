@@ -2,8 +2,13 @@ import time
 import pytest
 from faker import Faker
 from datetime import date
+
+from selenium.webdriver.chrome import options
+from selenium.webdriver.chrome.options import Options
 from seleniumwire import webdriver
 from openpyxl import load_workbook
+from setuptools._distutils.command.check import check
+
 from Locators.Locators import Locators
 from selenium.webdriver.common.by import By
 from pageObjects.BaseFile import CommanFlow
@@ -30,7 +35,9 @@ scriptData = datafile['Script Data']
 @pytest.fixture()
 def setup():
     global driver
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    mode = Options()
+    mode.add_argument("--headless")
+    driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=mode)
     driver.maximize_window()
     return driver
 
