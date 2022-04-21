@@ -50,4 +50,8 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest
+          py.test --html=report.html -v -s testCases/Master.py
+          py.test --html=report.html -v -s testCases/Practice.py
+          py.test --html=report.html -v -s testCases/Hub.py
+          py.test --html=report.html -v -s testCases/StandardPharma.py
+          py.test --html=report.html -v -s testCases/Patient.py
