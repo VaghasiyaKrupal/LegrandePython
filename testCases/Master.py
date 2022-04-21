@@ -44,103 +44,103 @@ practiceEmail = firstName.lower() + ".practice"
 emailAddress = "@mailinator.com"
 UserEmailPractice = ".practice@mailinator.com"
 
+#
+# class TestForgotPassword:
+#     def test_ForgotPassword(self, setup, MasterForgotPassword):
+#         self.driver = setup
+#         self.driver.quit()
+#
+#
+# class TestProductCreation:
+#     def test_CreateRXProduct(self, setup, MasterLogin):
+#         self.driver = setup
+#         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
+#         assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
+#         self.driver.find_element_by_name(MasterLocators.nameField).send_keys(rxProductName)
+#         scriptData.cell(2, 1).value = rxProductName
+#         datafile.save(FilePath)
+#         self.driver.find_element_by_class_name(MasterLocators.selectArrow).click()
+#         time.sleep(1)
+#         self.driver.find_element_by_xpath(MasterLocators.rxProductType).click()
+#         self.driver.find_element_by_name(MasterLocators.categoryField).send_keys(categoryName)
+#         self.driver.find_element_by_name(MasterLocators.brandField).send_keys(categoryName)
+#         self.driver.find_element_by_name(MasterLocators.packageField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.priceField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.gmvField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.descriptionField).send_keys(MasterLocators.description)
+#         self.driver.find_element_by_name(MasterLocators.awpField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.arpField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
+#         time.sleep(1)
+#         self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
+#             'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
+#         time.sleep(5)
+#         self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
+#         time.sleep(2)
+#         assert "You have successfully added " + scriptData.cell(2, 1).value + "."
+#         self.driver.quit()
+#
+#     def test_CreateOTCProduct(self, setup, MasterLogin):
+#         self.driver = setup
+#         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
+#         assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
+#         self.driver.find_element_by_name(MasterLocators.nameField).send_keys(otcProductName)
+#         scriptData.cell(2, 2).value = otcProductName
+#         datafile.save(FilePath)
+#         self.driver.find_element_by_class_name(MasterLocators.selectArrow).click()
+#         time.sleep(1)
+#         self.driver.find_element_by_xpath(MasterLocators.otcProductType).click()
+#         self.driver.find_element_by_name(MasterLocators.categoryField).send_keys(categoryName)
+#         self.driver.find_element_by_name(MasterLocators.brandField).send_keys(categoryName)
+#         self.driver.find_element_by_name(MasterLocators.packageField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.priceField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.gmvField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.descriptionField).send_keys(MasterLocators.description)
+#         self.driver.find_element_by_name(MasterLocators.awpField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.arpField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
+#         time.sleep(1)
+#         self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
+#             'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
+#         time.sleep(5)
+#         self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
+#         time.sleep(2)
+#         assert "You have successfully added " + scriptData.cell(2, 2).value + "."
+#         self.driver.quit()
+#
+#     def test_CreateCompoundProduct(self, setup, MasterLogin):
+#         self.driver = setup
+#         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
+#         assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
+#         self.driver.find_element_by_name(MasterLocators.nameField).send_keys(compoundProductName)
+#         scriptData.cell(2, 3).value = compoundProductName
+#         datafile.save(FilePath)
+#         self.driver.find_element_by_class_name(MasterLocators.selectArrow).click()
+#         time.sleep(1)
+#         self.driver.find_element_by_xpath(MasterLocators.compoundProductType).click()
+#         self.driver.find_element_by_name(MasterLocators.categoryField).send_keys(categoryName)
+#         self.driver.find_element_by_name(MasterLocators.brandField).send_keys(categoryName)
+#         self.driver.find_element_by_name(MasterLocators.packageField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.priceField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.gmvField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.descriptionField).send_keys(MasterLocators.description)
+#         self.driver.find_element_by_name(MasterLocators.awpField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.arpField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
+#         self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
+#         time.sleep(1)
+#         self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
+#             'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
+#         time.sleep(5)
+#         self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
+#         time.sleep(2)
+#         assert "You have successfully added " + scriptData.cell(2, 3).value + "."
+#         self.driver.quit()
 
-class TestForgotPassword:
-    def test_ForgotPassword(self, setup, MasterForgotPassword):
-        self.driver = setup
-        self.driver.quit()
 
-
-class TestProductCreation:
-    def test_CreateRXProduct(self, setup, MasterLogin):
-        self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
-        assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
-        self.driver.find_element_by_name(MasterLocators.nameField).send_keys(rxProductName)
-        scriptData.cell(2, 1).value = rxProductName
-        datafile.save(FilePath)
-        self.driver.find_element_by_class_name(MasterLocators.selectArrow).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.rxProductType).click()
-        self.driver.find_element_by_name(MasterLocators.categoryField).send_keys(categoryName)
-        self.driver.find_element_by_name(MasterLocators.brandField).send_keys(categoryName)
-        self.driver.find_element_by_name(MasterLocators.packageField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.priceField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.gmvField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.descriptionField).send_keys(MasterLocators.description)
-        self.driver.find_element_by_name(MasterLocators.awpField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.arpField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
-            'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
-        time.sleep(5)
-        self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
-        time.sleep(2)
-        assert "You have successfully added " + scriptData.cell(2, 1).value + "."
-        self.driver.quit()
-
-    def test_CreateOTCProduct(self, setup, MasterLogin):
-        self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
-        assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
-        self.driver.find_element_by_name(MasterLocators.nameField).send_keys(otcProductName)
-        scriptData.cell(2, 2).value = otcProductName
-        datafile.save(FilePath)
-        self.driver.find_element_by_class_name(MasterLocators.selectArrow).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.otcProductType).click()
-        self.driver.find_element_by_name(MasterLocators.categoryField).send_keys(categoryName)
-        self.driver.find_element_by_name(MasterLocators.brandField).send_keys(categoryName)
-        self.driver.find_element_by_name(MasterLocators.packageField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.priceField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.gmvField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.descriptionField).send_keys(MasterLocators.description)
-        self.driver.find_element_by_name(MasterLocators.awpField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.arpField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
-            'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
-        time.sleep(5)
-        self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
-        time.sleep(2)
-        assert "You have successfully added " + scriptData.cell(2, 2).value + "."
-        self.driver.quit()
-
-    def test_CreateCompoundProduct(self, setup, MasterLogin):
-        self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.addProductLink))).click()
-        assert self.driver.find_element_by_xpath(MasterLocators.activeProductCheckbox).is_selected()
-        self.driver.find_element_by_name(MasterLocators.nameField).send_keys(compoundProductName)
-        scriptData.cell(2, 3).value = compoundProductName
-        datafile.save(FilePath)
-        self.driver.find_element_by_class_name(MasterLocators.selectArrow).click()
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.compoundProductType).click()
-        self.driver.find_element_by_name(MasterLocators.categoryField).send_keys(categoryName)
-        self.driver.find_element_by_name(MasterLocators.brandField).send_keys(categoryName)
-        self.driver.find_element_by_name(MasterLocators.packageField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.priceField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.gmvField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.descriptionField).send_keys(MasterLocators.description)
-        self.driver.find_element_by_name(MasterLocators.awpField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.arpField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.ndcField).send_keys(random.randint(0, 100))
-        self.driver.find_element_by_name(MasterLocators.pnField).send_keys(random.randint(0, 100))
-        time.sleep(1)
-        self.driver.find_element_by_xpath(MasterLocators.uploadImage).send_keys(
-            'C:/Users/Administrator/PycharmProject/LegrandePython/TestData/Image.png')
-        time.sleep(5)
-        self.driver.find_element_by_xpath(MasterLocators.addProductButton).click()
-        time.sleep(2)
-        assert "You have successfully added " + scriptData.cell(2, 3).value + "."
-        self.driver.quit()
-
-
-# class TestDispenserCreation:
+class TestDispenserCreation:
     # def test_CreateHubDispenser(self, setup, MasterLogin):
     #     self.driver = setup
     #     WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
