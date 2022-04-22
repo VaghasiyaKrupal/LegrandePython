@@ -50,6 +50,7 @@ jobs:
       run: |
         mkdir public
         cp -r report.html public/report.html
+        cy -r *.png public
 
     - name: Deploy reports
       uses: peaceiris/actions-gh-pages@v3
