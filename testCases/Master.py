@@ -254,37 +254,37 @@ class TestDispenserCreation:
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.driver.quit()
 
-#     def test_CreateOTCDispenser(self, setup, MasterLogin):
-#         self.driver = setup
-#         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
-#         self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
-#         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " OTC")
-#         scriptData.cell(2, 6).value = "Selenium " + firstName + " OTC"
-#         loginData.cell(6, 3).value = otcDispenserEmail + emailAddress
-#         datafile.save(FilePath)
-#         self.driver.find_element_by_name(MasterLocators.emailField).send_keys(loginData.cell(6, 3).value)
-#         self.driver.find_element_by_name(MasterLocators.phoneField).send_keys(PhoneNumber)
-#         self.driver.find_element_by_name(MasterLocators.faxField).send_keys(PhoneNumber)
-#         self.driver.find_element_by_name(MasterLocators.addressStreet1Field).send_keys(street_1)
-#         self.driver.find_element_by_name(MasterLocators.addressCityField).send_keys(city)
-#         self.driver.find_element_by_xpath(MasterLocators.selectState).click()
-#         time.sleep(1)
-#         self.driver.find_element_by_xpath(PracticeLocators.state).click()
-#         self.driver.find_element_by_name(MasterLocators.addressZipCodeField).send_keys(zipCode)
-#         self.driver.find_element_by_xpath(MasterLocators.selectTimezone).click()
-#         time.sleep(1)
-#         self.driver.find_element_by_xpath(MasterLocators.timeZoneValue).click()
-#         self.driver.find_element_by_name(MasterLocators.npiField).send_keys(random.randint(0, 9999999))
-#         self.driver.find_element_by_name(MasterLocators.licenseField).send_keys(random.randint(0, 9999999))
-#         self.driver.find_element_by_name(MasterLocators.adminFirstNameField).send_keys(firstName)
-#         self.driver.find_element_by_name(MasterLocators.adminLastnameField).send_keys(lastName)
-#         self.driver.find_element_by_name(MasterLocators.adminEmailField).send_keys(loginData.cell(6, 3).value)
-#         self.driver.find_element_by_name(MasterLocators.adminPhoneField).send_keys(PhoneNumber)
-#         self.driver.find_element_by_xpath(PracticeLocators.createAccountButton).click()
-#         time.sleep(2)
-#         assert "Congratulations. You have successfully created a new dispenser account."
-#         self.driver.find_element_by_xpath(MasterLocators.dismissButton).click()
-#         self.driver.quit()
+    def test_CreateOTCDispenser(self, setup, MasterLogin):
+        self.driver = setup
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
+        self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
+        self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " OTC")
+        scriptData.cell(2, 6).value = "Selenium " + firstName + " OTC"
+        loginData.cell(6, 3).value = otcDispenserEmail + emailAddress
+        datafile.save(FilePath)
+        self.driver.find_element_by_name(MasterLocators.emailField).send_keys(loginData.cell(6, 3).value)
+        self.driver.find_element_by_name(MasterLocators.phoneField).send_keys(PhoneNumber)
+        self.driver.find_element_by_name(MasterLocators.faxField).send_keys(PhoneNumber)
+        self.driver.find_element_by_name(MasterLocators.addressStreet1Field).send_keys(street_1)
+        self.driver.find_element_by_name(MasterLocators.addressCityField).send_keys(city)
+        self.driver.find_element_by_xpath(MasterLocators.selectState).click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(PracticeLocators.state).click()
+        self.driver.find_element_by_name(MasterLocators.addressZipCodeField).send_keys(zipCode)
+        self.driver.find_element_by_xpath(MasterLocators.selectTimezone).click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(MasterLocators.timeZoneValue).click()
+        self.driver.find_element_by_name(MasterLocators.npiField).send_keys(random.randint(0, 9999999))
+        self.driver.find_element_by_name(MasterLocators.licenseField).send_keys(random.randint(0, 9999999))
+        self.driver.find_element_by_name(MasterLocators.adminFirstNameField).send_keys(firstName)
+        self.driver.find_element_by_name(MasterLocators.adminLastnameField).send_keys(lastName)
+        self.driver.find_element_by_name(MasterLocators.adminEmailField).send_keys(loginData.cell(6, 3).value)
+        self.driver.find_element_by_name(MasterLocators.adminPhoneField).send_keys(PhoneNumber)
+        self.driver.find_element_by_xpath(PracticeLocators.createAccountButton).click()
+        time.sleep(2)
+        assert "Congratulations. You have successfully created a new dispenser account."
+        self.driver.find_element_by_xpath(MasterLocators.dismissButton).click()
+        self.driver.quit()
 #
 #     def test_CreateOTCEmailAndSetPassword(self, setup):
 #         self.driver = setup
