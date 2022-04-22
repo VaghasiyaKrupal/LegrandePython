@@ -29,9 +29,6 @@ jobs:
 #        py.test --html=report.html -v -s testCases/Master.py
 
   steps:
-    - name: Create Temp Directory
-      run: mkdir downloads
-
     - uses: actions/checkout@v2
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
@@ -47,11 +44,12 @@ jobs:
       run: |
         py.test --html=report.html -v -s testCases/Master.py
 
-    - name: publish dir
-      run: cd downloads
+    - name: make public directory
+      run: |
+        mkdir public
+        cp -r report.html public/report.html
 
-    - name: Reporsts
-      uses: actions/upload-artifact@v2
+    - name: Deploy reports
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: TestReports
-        path: downloads
+        publish_dir: ./public
