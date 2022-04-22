@@ -46,6 +46,7 @@ jobs:
         cp -r report.html public/report.html
 
     - name: Test with pytest
+      continue-on-error: true
       run: |
         py.test --html=report.html -v -s testCases/Master.py
 
