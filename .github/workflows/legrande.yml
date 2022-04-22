@@ -40,15 +40,15 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: make public directory
-      run: |
-        mkdir public
-        cp -r report.html public/report.html
-
     - name: Test with pytest
       continue-on-error: true
       run: |
         py.test --html=report.html -v -s testCases/Master.py
+
+    - name: make public directory
+      run: |
+        mkdir public
+        cp -r report.html public/report.html
 
     - name: Deploy reports
       uses: peaceiris/actions-gh-pages@v3
