@@ -51,7 +51,7 @@ jobs:
       run: cd downloads
 
     - name: Reporsts
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
       with:
         name: TestReports
         path: downloads
