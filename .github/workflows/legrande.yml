@@ -57,7 +57,9 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
 
-    - name: Download math result for job 2
-      uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v3
       with:
-        name: homework
+        name: my-artifact
+
+    - name: Display structure of downloaded files
+      run: ls -R
