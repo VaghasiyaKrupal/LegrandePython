@@ -6,27 +6,11 @@ on:
   push:
     branches:
       - 'master'
-#
+
 jobs:
  seleniumPython-test:
   name: Run on Linux
   runs-on: ubuntu-20.04
-#  strategy:
-#    matrix:
-#      python-version: ['3.10']
-#  steps:
-#    - uses: actions/checkout@v2
-#    - name: Set up Python ${{ matrix.python-version }}
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: ${{ matrix.python-version }}
-#    - name: Install dependencies
-#      run: |
-#        python -m pip install --upgrade pip
-#        pip install -r requirements.txt
-#    - name: Run pytest verify_framework.py --browser=chrome --headless
-#      run: |
-#        py.test --html=report.html -v -s testCases/Master.py
 
   steps:
     - uses: actions/checkout@v2
@@ -41,6 +25,9 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+    - name: Create directory
+      run: mkdir downloads
+
     - name: Test with pytest
       continue-on-error: true
       run: |
@@ -50,6 +37,13 @@ jobs:
       run: |
         mkdir public
         cp -r report.html public/report.html
+        cp -r report.html downloads
+
+    - name: download artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Download-reports
+        path: Downloads
 
     - name: Deploy reports
       uses: peaceiris/actions-gh-pages@v3
