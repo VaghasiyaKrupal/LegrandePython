@@ -3,5 +3,6 @@ report.html
 Screenshots
 venv
 .pytest_cache
+__pycache__
 assets
 testCases/assets
