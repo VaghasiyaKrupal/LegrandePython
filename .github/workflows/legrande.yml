@@ -45,7 +45,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: Download-reports
-        path: Downloads
+        path: public/report.html
 
     - name: Deploy reports
       uses: peaceiris/actions-gh-pages@v3
