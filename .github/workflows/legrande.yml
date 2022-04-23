@@ -25,10 +25,10 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Create directory
-      run: |
-        mkdir downloads
-        cd downloads
+#    - name: Create directory
+#      run: |
+#        mkdir downloads
+#        cd downloads
 
     - name: Test with pytest
       continue-on-error: true
@@ -39,13 +39,12 @@ jobs:
       run: |
         mkdir public
         cp -r report.html public/report.html
-        cd ..
 
     - name: download artifact
       uses: actions/download-artifact@v2
       with:
         name: Download-reports
-        path: public/report.html
+        path: report.html
 
     - name: Deploy reports
       uses: peaceiris/actions-gh-pages@v3
