@@ -42,7 +42,7 @@ jobs:
         cd ..
 
     - name: download artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/download-artifact@v2
       with:
         name: Download-reports
         path: Downloads
