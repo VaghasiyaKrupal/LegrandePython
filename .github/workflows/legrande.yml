@@ -28,21 +28,10 @@ jobs:
       - name: Test with pytest
         continue-on-error: true
         run: |
-          py.test --html=report.html -v testCases/Master.py
-
-#      - name: make public directory
-#        run: |
-#          mkdir public
-#          cp -r report.html public/report.html
+          py.test --html=report.html -v testCases/Practice.py
 
       - name: download artifact
         uses: actions/upload-artifact@v2
         with:
           name: Download-reports
           path: report.html
-
-#      - name: Deploy reports
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_dir: ./public
