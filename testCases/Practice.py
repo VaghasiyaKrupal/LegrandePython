@@ -1,4 +1,5 @@
 import time
+import os
 from openpyxl import load_workbook
 from selenium.webdriver.common.by import By
 from Locators.PatientLocators import PatientLocators
@@ -85,7 +86,7 @@ class TestPractice:
         self.driver.find_element_by_xpath(PracticeLocators.documentsType).click()
         self.driver.find_element_by_xpath(PracticeLocators.documentTitle).send_keys('WL')
         self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
-        self.driver.find_element_by_css_selector(PracticeLocators.uploadFile).send_keys("C:/Users/Administrator/Downloads/Test Files/Welcome Letter.pdf")
+        self.driver.find_element_by_css_selector(PracticeLocators.uploadFile).send_keys(os.path.abspath("TestData/WelcomeLetter.pdf"))
         SubmitButton = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, PracticeLocators.submitButton)))
         if SubmitButton.is_enabled():
             SubmitButton.click()
