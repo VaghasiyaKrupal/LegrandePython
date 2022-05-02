@@ -32,7 +32,7 @@ jobs:
           py.test --html=report.html -v testCases/Master.py
 
       - name: download artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: Download-reports
           path: report.html

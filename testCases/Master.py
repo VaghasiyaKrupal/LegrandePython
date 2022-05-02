@@ -44,6 +44,7 @@ practiceEmail = firstName.lower() + ".practice"
 emailAddress = "@mailinator.com"
 UserEmailPractice = ".practice@mailinator.com"
 
+
 #
 # class TestForgotPassword:
 #     def test_ForgotPassword(self, setup, MasterForgotPassword):
@@ -145,6 +146,7 @@ class TestDispenserCreation:
     #     self.driver = setup
     #     WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
     #     self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
+    # time.sleep(1)
     #     self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Hub")
     #     scriptData.cell(2, 4).value = "Selenium " + firstName + " Hub"
     #     loginData.cell(4, 3).value = hubDispenserEmail + emailAddress
@@ -199,8 +201,10 @@ class TestDispenserCreation:
 
     def test_CreateRXDispenser(self, setup, MasterLogin):
         self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
         self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
+        time.sleep(1)
         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " RX")
         scriptData.cell(2, 5).value = "Selenium " + firstName + " RX"
         loginData.cell(5, 3).value = rxDispenserEmail + emailAddress
@@ -258,6 +262,7 @@ class TestDispenserCreation:
     #     self.driver = setup
     #     WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.dispenserScreen))).click()
     #     self.driver.find_element_by_link_text(MasterLocators.addDispenserLink).click()
+    # time.sleep(1)
     #     self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " OTC")
     #     scriptData.cell(2, 6).value = "Selenium " + firstName + " OTC"
     #     loginData.cell(6, 3).value = otcDispenserEmail + emailAddress
@@ -374,6 +379,7 @@ class TestDispenserCreation:
 #         self.driver = setup
 #         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.practiceScreen))).click()
 #         self.driver.find_element_by_link_text(MasterLocators.addPracticeLink).click()
+# time.sleep(1)
 #         self.driver.find_element_by_name(MasterLocators.nameField).send_keys("Selenium " + firstName + " Practice")
 #         scriptData.cell(2, 8).value = "Selenium " + firstName
 #         loginData.cell(3, 3).value = practiceEmail + emailAddress
@@ -447,6 +453,7 @@ class TestDispenserCreation:
 #         self.driver = setup
 #         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, MasterLocators.userScreen))).click()
 #         self.driver.find_element_by_xpath(PracticeLocators.addUserButton).click()
+# time.sleep(1)
 #         self.driver.find_element_by_name(PracticeLocators.firstName).send_keys(firstName)
 #         self.driver.find_element_by_name(PracticeLocators.lastName).send_keys(lastName)
 #         scriptData.cell(2, 9).value = firstName + " " + lastName

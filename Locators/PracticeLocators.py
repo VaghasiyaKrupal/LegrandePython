@@ -81,4 +81,3 @@ class PracticeLocators:
     addressZipCode = 'zip'
     state = "//div[@class='Select-menu-outer']//div[@aria-label='" + testData.cell(2, 15).value + "']"
     updateOrderButton = '//*[text()="Update Order"]'
-

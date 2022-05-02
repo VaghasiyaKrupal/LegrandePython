@@ -1,5 +1,5 @@
-import time
 import os
+import time
 from openpyxl import load_workbook
 from selenium.webdriver.common.by import By
 from Locators.PatientLocators import PatientLocators
@@ -24,7 +24,8 @@ class TestPractice:
 
     def test_onetimeTemplate(self, setup, PracticeLogin):
         self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, PracticeLocators.orderTemplateScreen))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, PracticeLocators.orderTemplateScreen))).click()
         self.driver.find_element_by_link_text(PracticeLocators.createTemplateButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.selectOnetimeTemplate).click()
         self.driver.find_element_by_xpath(PracticeLocators.templateTitle).send_keys(testData.cell(2, 6).value)
@@ -51,7 +52,8 @@ class TestPractice:
 
     def test_subscriptionTemplate(self, setup, PracticeLogin):
         self.driver = setup
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, PracticeLocators.orderTemplateScreen))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, PracticeLocators.orderTemplateScreen))).click()
         self.driver.find_element_by_link_text(PracticeLocators.createTemplateButton).click()
         self.driver.find_element_by_xpath(PracticeLocators.selectSubscriptionTemplate).click()
         self.driver.find_element_by_xpath(PracticeLocators.templateTitle).send_keys(testData.cell(2, 6).value)
@@ -78,7 +80,8 @@ class TestPractice:
 
     def test_DropChart(self, setup, PracticeLogin):
         self.driver = setup
-        WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, PracticeLocators.documentsScreen))).click()
+        WebDriverWait(self.driver, 30).until(
+            EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, PracticeLocators.documentsScreen))).click()
         NewDock = self.driver.find_element_by_xpath(PracticeLocators.newDocuments)
         self.driver.execute_script("arguments[0].click()", NewDock)
         self.driver.find_element_by_xpath(PracticeLocators.documentsDoctorSearchbox).click()
@@ -87,8 +90,10 @@ class TestPractice:
         self.driver.find_element_by_xpath(PracticeLocators.documentsType).click()
         self.driver.find_element_by_xpath(PracticeLocators.documentTitle).send_keys('WL')
         self.driver.find_element_by_xpath(PracticeLocators.continueButton).click()
-        self.driver.find_element_by_css_selector(PracticeLocators.uploadFile).send_keys(os.path.abspath("TestData/WelcomeLetter.pdf"))
-        SubmitButton = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, PracticeLocators.submitButton)))
+        self.driver.find_element_by_css_selector(PracticeLocators.uploadFile).send_keys(
+            os.path.abspath("TestData/WelcomeLetter.pdf"))
+        SubmitButton = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, PracticeLocators.submitButton)))
         if SubmitButton.is_enabled():
             SubmitButton.click()
         else:

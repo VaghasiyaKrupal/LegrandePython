@@ -12,7 +12,6 @@ from selenium.webdriver.chrome.options import Options
 from Locators.PracticeLocators import PracticeLocators
 from webdriver_manager.chrome import ChromeDriverManager
 
-
 faker = Faker()
 today = date.today()
 currentDate = today.strftime("%m/%d/%Y")
@@ -33,7 +32,7 @@ def setup():
     global driver
     mode = Options()
     mode.add_argument("--headless")
-    driver = webdriver.Chrome(ChromeDriverManager().install(),chrome_options=mode)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=mode)
     driver.maximize_window()
     return driver
 
