@@ -80,7 +80,7 @@ class TestPractice:
         self.driver = setup
         time.sleep(5)
         WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, PracticeLocators.documentsScreen))).click()
-        self.driver.find_element_by_class_name(PracticeLocators.newDocuments).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.newDocuments))).click()
         self.driver.find_element_by_xpath(PracticeLocators.documentsDoctorSearchbox).click()
         self.driver.find_element_by_xpath(PracticeLocators.selectDoctor).click()
         self.driver.find_element_by_xpath(PracticeLocators.selectDocumentsSearchbox).click()
