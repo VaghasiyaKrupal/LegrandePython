@@ -17,7 +17,7 @@ class PracticeLocators:
     orderTemplateScreen = 'Order Templates'
     createTemplateButton = 'New Plan Template'
     documentsScreen = 'Documents'
-    newDocuments = "//button[contains(text(),'Upload New Document')]"
+    newDocuments = "btn-primary"
     documentsDoctorSearchbox = '//*[@placeholder="Search by first or last name"]'
     selectDoctor = "//div[@data-test='_HINTS_HINT']//*[text()='" + scriptData.cell(2, 8).value + " Practice']"
     selectDocumentsSearchbox = '//*[text()="Select a document type"]'
