@@ -78,9 +78,9 @@ class TestPractice:
 
     def test_DropChart(self, setup, PracticeLogin):
         self.driver = setup
-        time.sleep(5)
         WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, PracticeLocators.documentsScreen))).click()
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,PracticeLocators.newDocuments))).click()
+        NewDock = self.driver.find_element_by_xpath(PracticeLocators.newDocuments)
+        self.driver.execute_script("arguments[0].click()", NewDock)
         self.driver.find_element_by_xpath(PracticeLocators.documentsDoctorSearchbox).click()
         self.driver.find_element_by_xpath(PracticeLocators.selectDoctor).click()
         self.driver.find_element_by_xpath(PracticeLocators.selectDocumentsSearchbox).click()
